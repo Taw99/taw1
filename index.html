@@ -103,7 +103,7 @@
     </aside>
 
     <div class="app-shell">
-        <!-- Header: Added 'hidden' class by default -->
+        <!-- Header -->
         <header id="main-header" class="hidden flex-shrink-0 bg-white/80 backdrop-blur-lg border-b border-gray-100 sticky top-0 z-30">
             <div class="flex items-center justify-between px-4 py-3">
                 <button onclick="toggleSidebar()" class="p-2 text-gray-500 hover:text-teal-600 hover:bg-gray-100 rounded-lg transition">
@@ -272,10 +272,11 @@
                 if (currentPage === 'tasks') { $('page-tasks').innerHTML = `<div class="card p-5"><div class="mb-6 bg-gray-50 p-4 rounded-xl border border-gray-200"><h4 class="font-bold mb-3 text-sm text-gray-700">إضافة مهمة جديدة</h4><form id="add-task-form-mgr" class="space-y-2" onsubmit="addNewTask(event)"><textarea placeholder="وصف المهمة..." class="w-full rounded-xl p-2 text-sm outline-none resize-none" rows="2" required id="mgr-task-desc"></textarea><select class="w-full rounded-xl p-2 text-sm outline-none bg-white" required id="mgr-task-assignee"><option value="">اختر موظف</option>${USERS_CONFIG.filter(u=>u.role==='employee').map(u=>`<option value="${u.id}">${u.displayName}</option>`).join('')}<option value="all">الجميع</option></select><button class="w-full btn-primary text-white py-2 rounded-xl font-bold text-sm shadow-md">إضافة</button></form></div><h4 class="font-bold mb-2 text-xs text-gray-400 uppercase">المهام الحالية</h4><div class="space-y-2">${tasks.length === 0 ? '<p class="text-gray-400 text-center text-sm py-4">لا مهام</p>' : tasks.map(t => `<div class="p-3 bg-gray-50 rounded-xl border border-gray-100 text-sm"><div class="flex justify-between items-center"><div><p class="font-medium text-gray-800">${t.description}</p><p class="text-[10px] text-gray-400 mt-0.5">${t.assigneeName}</p></div><span class="text-[10px] px-2 py-1 rounded-full font-semibold ${t.completed ? 'bg-green-100 text-green-700' : 'bg-amber-100 text-amber-700'}">${t.completed ? 'منجز' : 'معلق'}</span></div></div>`).join('')}</div></div>`; }
                 if (currentPage === 'leaves') { const pending = leaves.filter(l => l.status === 'Pending'); const processed = leaves.filter(l => l.status !== 'Pending').sort((a,b) => b.date - a.date); const pendingOvertime = overtimeLogs.filter(o => o.status === 'Pending'); $('page-leaves').innerHTML = `<div class="card p-5"><h3 class="font-bold text-lg text-gray-800 mb-4">طلبات الإجازات</h3><div class="mb-6"><h4 class="font-bold mb-2 text-xs text-orange-600 flex items-center gap-1"><span class="w-1.5 h-1.5 bg-orange-500 rounded-full animate-pulse"></span>معلقة (${pending.length})</h4>${pending.length === 0 ? '<div class="text-center py-6 text-gray-400 text-xs">لا يوجد طلبات معلقة</div>' : pending.map(l => { const dur = calcDur(l.startDate, l.endDate); const bal = employeesData[l.employeeId] || {}; return `<div class="bg-white border border-gray-200 rounded-xl p-3 mb-2 shadow-xs"><div class="flex justify-between items-start mb-2"><div><h4 class="font-bold text-sm text-gray-800">${l.employeeName}</h4><p class="text-[11px] text-gray-500">${l.type} (${dur.days} أيام)</p></div><span class="text-[10px] bg-blue-50 text-blue-600 px-2 py-1 rounded-full font-medium">باقي: ${bal.balanceDays || 0}ي</span></div>${l.imageUrl ? `<div class="my-2 rounded overflow-hidden"><img src="${l.imageUrl}" onclick="viewImage('${l.imageUrl}')" class="w-full h-32 object-cover cursor-pointer hover:opacity-90 transition" alt="Image"></div>` : ''}<div class="flex gap-2 pt-2 border-t mt-2"><button onclick="handleLeave('${l.id}', 'Approved', ${dur.totalHours}, '${l.type}', '${l.employeeId}')" class="flex-1 bg-green-500 text-white py-1.5 rounded-lg text-xs font-bold hover:bg-green-600">قبول</button><button onclick="handleLeave('${l.id}', 'Rejected', 0, 'None', '${l.employeeId}')" class="flex-1 bg-red-100 text-red-600 py-1.5 rounded-lg text-xs font-bold hover:bg-red-200">رفض</button></div></div>`; }).join('')}</div><div class="mb-6 border-t pt-4"><h4 class="font-bold mb-2 text-xs text-indigo-600 flex items-center gap-1"><span class="w-1.5 h-1.5 bg-indigo-500 rounded-full animate-pulse"></span>طلات وقت إضافي (${pendingOvertime.length})</h4>${pendingOvertime.length === 0 ? '<div class="text-center py-4 text-gray-400 text-xs">لا يوجد</div>' : pendingOvertime.map(o => `<div class="bg-white border border-indigo-100 rounded-xl p-3 mb-2 shadow-xs"><div class="flex justify-between items-start mb-2"><div><h4 class="font-bold text-sm text-gray-800">${o.employeeName}</h4><p class="text-[11px] text-gray-500">التاريخ: ${formatDate(o.date)}</p></div><span class="text-[10px] bg-indigo-50 text-indigo-600 px-2 py-1 rounded-full font-bold">${o.hours} ساعات</span></div><div class="flex gap-2 pt-2 border-t mt-2"><button onclick="handleOvertime('${o.id}', 'Approved', '${o.employeeId}')" class="flex-1 bg-green-500 text-white py-1.5 rounded-lg text-xs font-bold hover:bg-green-600">اعتماد</button><button onclick="handleOvertime('${o.id}', 'Rejected', '${o.employeeId}')" class="flex-1 bg-red-100 text-red-600 py-1.5 rounded-lg text-xs font-bold hover:bg-red-200">رفض</button></div></div>`).join('')}</div><div><h4 class="font-bold mb-2 text-xs text-gray-400 uppercase">سابقة</h4><div class="space-y-1">${processed.map(l => `<div class="flex justify-between items-center p-2 bg-gray-50 rounded-lg text-xs"><span class="text-gray-700">${l.employeeName} <span class="text-gray-400">(${l.type})</span></span><span class="font-bold ${l.status === 'Approved' ? 'text-green-500' : 'text-red-400'}">${l.status === 'Approved' ? 'مقبول' : 'مرفوض'}</span></div>`).join('')}</div></div></div>`; }
 
-                // --- REPORTS PAGE (UPDATED UI) ---
+                // --- REPORTS PAGE (Logic to deduct employee from workforce until return date) ---
                 if (currentPage === 'mgr-reports') {
                     const totalEmps = USERS_CONFIG.filter(u => u.role === 'employee').length; 
-                    const now = new Date(); const year = now.getFullYear(); const month = now.getMonth(); const daysInMonth = new Date(year, month + 1, 0).getDate(); const requiredStaff = 5; 
+                    const now = new Date(); now.setHours(0,0,0,0); // Reset time for accurate date comparison
+                    const year = now.getFullYear(); const month = now.getMonth(); const daysInMonth = new Date(year, month + 1, 0).getDate(); const requiredStaff = 5; 
                     const rowsHtml = []; const shortageDays = [];
 
                     for(let day = 1; day <= daysInMonth; day++) {
@@ -283,12 +284,24 @@
                         const dateStr = date.toISOString().split('T')[0]; 
                         const dayName = date.toLocaleDateString('ar-EG', { weekday: 'short' }); 
                         const isToday = date.toDateString() === now.toDateString(); 
-                        const isPast = date < now && !isToday;
+                        const isPast = date < now; // Past days (excluding today)
 
-                        // Calculations
-                        const absentApproved = leaves.filter(l => { if(l.status !== 'Approved') return false; const start = new Date(l.startDate); const end = new Date(l.endDate); return date >= start && date <= end; });
+                        // --- UPDATED LOGIC: Deduct until Return Date ---
+                        // An employee is considered absent if:
+                        // 1. Leave is Approved
+                        // 2. The current 'date' is >= Start Date
+                        // 3. The current 'date' is <= End Date + 1 day (Return Date)
+                        const absentApproved = leaves.filter(l => {
+                            if(l.status !== 'Approved') return false;
+                            const start = new Date(l.startDate); start.setHours(0,0,0,0);
+                            const end = new Date(l.endDate); end.setHours(0,0,0,0);
+                            const returnDate = new Date(end); returnDate.setDate(returnDate.getDate() + 1); returnDate.setHours(0,0,0,0); // Return is next day
+                            return date >= start && date <= returnDate;
+                        });
+                        
+                        const absentCount = absentApproved.length;
+                        const actualInternal = totalEmps - absentCount; 
                         const externalCount = externalWorkers[dateStr] || 0; 
-                        const actualInternal = totalEmps - absentApproved.length; 
                         const totalWorkforce = actualInternal + externalCount; 
                         const deficit = requiredStaff - totalWorkforce;
 
@@ -326,7 +339,7 @@
                     $('page-mgr-reports').innerHTML = `
                      <div class="card p-4 mb-4">
                         <div class="flex justify-between items-center mb-4">
-                            <div><h3 class="font-bold text-lg text-gray-800">توقع العجز الشهري</h3><p class="text-xs text-gray-500">اضغط على اليوم للتفاصيل أو عدّل العمالة الخارجية</p></div>
+                            <div><h3 class="font-bold text-lg text-gray-800">توقع العجز الشهري</h3><p class="text-xs text-gray-500">يتم خصم الموظفين في إجازة (مقبولة) حتى يوم العودة</p></div>
                             <div class="flex items-center gap-4 text-[10px]">
                                 <div class="flex items-center gap-1"><div class="w-2 h-2 rounded bg-teal-500"></div> موظفين</div>
                                 <div class="flex items-center gap-1"><div class="w-2 h-2 rounded bg-purple-400"></div> خارجية</div>
@@ -374,7 +387,38 @@
         window.deleteSingleLog = async (id) => { if(!confirm("تأكيد الحذف؟")) return; await deleteDoc(doc(db, `artifacts/${APP_ID}/public/data/balance_logs`, id)); showToast("تم الحذف"); };
         window.applyHistoryFilter = (val) => { currentHistoryFilter = val; updateContent(); };
         window.completeTask = async (id) => { const ref = doc(db, `artifacts/${APP_ID}/public/data/tasks`, id); const snap = await getDoc(ref); const data = snap.data(); if (data.assigneeId === 'all') { const completed = data.completedBy || []; if (!completed.some(c => c.id === currentUser.id)) { await updateDoc(ref, { completedBy: [...completed, { id: currentUser.id, name: currentUser.displayName }] }); } } else { await updateDoc(ref, { completed: true }); } showToast("تم إنجاز المهمة"); };
-        window.handleLeave = async (id, status, totalHours, leaveType, empId) => { const ref = doc(db, `artifacts/${APP_ID}/public/data/leaves`, id); const snap = await getDoc(ref); const data = snap.data(); if (status === 'Approved') { if (leaveType !== 'مرضية') { const empData = employeesData[empId] || {}; let currentTotal = ((empData.balanceDays || 0) * 8) + (empData.balanceHours || 0); let newTotal = Math.max(0, currentTotal - totalHours); const newDays = Math.floor(newTotal / 8); const newHours = newTotal % 8; await setDoc(doc(db, `artifacts/${APP_ID}/public/data/employees`, empId), { balanceDays: newDays, balanceHours: newHours }, { merge: true }); const dur = calcDur(data.startDate, data.endDate); await logTx(empId, data.employeeName, 'deduction', { days: dur.days, hours: 0 }, `إجازة ${data.type}`); } } const msg = status === 'Approved' ? 'تم قبول طلب إجازتك' : 'تم رفض طلب إجازتك'; await createNotification(empId, msg, `الطلب: ${data.type}`, 'leaves'); await updateDoc(ref, { status }); showToast(`تم ${status === 'Approved' ? 'القبول' : 'الرفض'}`); };
+        
+        // --- FIXED: LEAVE HANDLER ---
+        window.handleLeave = async (id, status, totalHours, leaveType, empId) => { 
+            const ref = doc(db, `artifacts/${APP_ID}/public/data/leaves`, id); 
+            const snap = await getDoc(ref); 
+            const data = snap.data(); 
+            
+            if (status === 'Approved') { 
+                // Deduct from BALANCE (Days) only if NOT Sick
+                if (leaveType !== 'مرضية') { 
+                    const empData = employeesData[empId] || {}; 
+                    let currentTotal = ((empData.balanceDays || 0) * 8) + (empData.balanceHours || 0); 
+                    let newTotal = Math.max(0, currentTotal - totalHours); 
+                    const newDays = Math.floor(newTotal / 8); 
+                    const newHours = newTotal % 8; 
+                    await setDoc(doc(db, `artifacts/${APP_ID}/public/data/employees`, empId), { balanceDays: newDays, balanceHours: newHours }, { merge: true }); 
+                    const dur = calcDur(data.startDate, data.endDate); 
+                    await logTx(empId, data.employeeName, 'deduction', { days: dur.days, hours: 0 }, `إجازة ${data.type}`); 
+                } else {
+                    const dur = calcDur(data.startDate, data.endDate); 
+                    await logTx(empId, data.employeeName, 'info', { days: dur.days, hours: 0 }, `إجازة مرضية (بدون خصم رصيد)`); 
+                }
+                // Note: Deduction from Workforce table happens automatically in updateContent()
+                // because we filter leaves by status === 'Approved' and check date ranges.
+            } 
+            
+            const msg = status === 'Approved' ? 'تم قبول طلب إجازتك' : 'تم رفض طلب إجازتك'; 
+            await createNotification(empId, msg, `الطلب: ${data.type}`, 'leaves'); 
+            await updateDoc(ref, { status }); 
+            showToast(`تم ${status === 'Approved' ? 'القبول' : 'الرفض'}`); 
+        };
+        
         window.handleOvertime = async (id, status, empId) => { const ref = doc(db, `artifacts/${APP_ID}/public/data/overtime`, id); await updateDoc(ref, { status }); const msg = status === 'Approved' ? 'تم اعتماد الطلب' : 'تم رفض الطلب'; await createNotification(empId, msg, `الحالة: ${status}`, 'overtime'); showToast(msg); };
         window.addNewTask = async (e) => { e.preventDefault(); const desc = $('mgr-task-desc').value; const assigneeId = $('mgr-task-assignee').value; if(!assigneeId) return showToast("اختر موظف", "error"); const assigneeName = assigneeId === 'all' ? 'الجميع' : USERS_CONFIG.find(u => u.id === assigneeId).displayName; await addDoc(collection(db, `artifacts/${APP_ID}/public/data/tasks`), { description: desc, assigneeId, assigneeName, completed: false, completedBy: [], createdAt: new Date() }); $('mgr-task-desc').value = ''; $('mgr-task-assignee').value = ''; showToast("تمت الإضافة"); };
         window.triggerDelete = async (colName) => { const messages = { tasks: 'المهام', leaves: 'الإجازات', overtime: 'الوقت الإضافي', balance_logs: 'سجل الأرصدة' }; const msg = messages[colName]; if(!confirm(`تأكيد حذف (${msg})؟`)) return; await deleteCollection(colName, false); showToast(`تم الحذف`); };
@@ -396,7 +440,6 @@
         window.logoutUser = async () => { 
             await signOut(auth); 
             localStorage.removeItem('egybev_user'); 
-            // Hide UI elements on logout
             hide('main-header'); 
             hide('dashboard-container'); 
             show('login-section'); 
@@ -430,7 +473,7 @@
                     setupListeners(); 
                     hide('login-section'); 
                     show('dashboard-container'); 
-                    show('main-header'); // Show header on login
+                    show('main-header'); 
                     renderSidebar(); 
                     if (currentUser.role === 'manager') navigateTo('tasks'); 
                     else navigateTo('emp-balance'); 
