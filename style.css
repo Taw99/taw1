@@ -1,0 +1,101 @@
+:root {
+    --primary: #0d9488;
+    --primary-dark: #115e59;
+    --accent: #f97316;
+    --bg-color: #f1f5f9;
+    --card-bg: #ffffff;
+    --text-main: #1e293b;
+    --text-muted: #64748b;
+}
+
+body {
+    font-family: 'IBM Plex Sans Arabic', sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-main);
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+}
+
+.hidden { display: none !important; }
+.app-shell { height: 100vh; height: 100dvh; display: flex; flex-direction: column; }
+
+/* --- Sidebar Improvements --- */
+.sidebar-backdrop {
+    position: fixed; inset: 0; background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(4px); z-index: 40;
+    opacity: 0; pointer-events: none; transition: opacity 0.3s ease;
+}
+.sidebar-backdrop.active { opacity: 1; pointer-events: auto; }
+
+.sidebar-panel {
+    position: fixed; top: 0; left: 0; bottom: 0; width: 280px; background: white; z-index: 50;
+    transform: translateX(-100%); transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 8px 0 32px rgba(0,0,0,0.1); 
+    border-top-right-radius: 24px; border-bottom-right-radius: 24px;
+}
+.sidebar-panel.active { transform: translateX(0); }
+
+/* --- Card & Inputs --- */
+.card { 
+    background: var(--card-bg); 
+    border-radius: 1.25rem; 
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.01); 
+    border: 1px solid rgba(226, 232, 240, 0.6); 
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+.card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.01);
+}
+
+input, select, textarea {
+    font-size: 16px !important; background-color: #f8fafc; border: 1px solid #e2e8f0 !important; transition: all 0.2s; border-radius: 12px;
+}
+input:focus, select:focus, textarea:focus {
+    background-color: white; border-color: var(--primary) !important; box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.15) !important; outline: none;
+}
+
+/* --- Scrollbar --- */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: #f1f5f9; border-radius: 10px; }
+::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+
+/* --- Animations --- */
+.slide-up { animation: slideUp 0.5s cubic-bezier(0.16, 1, 0.3, 1); }
+@keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+
+.fade-in { animation: fadeIn 0.3s ease; }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+/* --- Utilities --- */
+.btn-primary { background: linear-gradient(135deg, #0d9488 0%, #115e59 100%); color: white; font-weight: 600; transition: all 0.2s; box-shadow: 0 4px 14px rgba(13, 148, 136, 0.25); }
+.btn-primary:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(13, 148, 136, 0.35); }
+.btn-primary:active { transform: translateY(0); }
+
+.btn-danger { background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%); color: white; }
+.btn-icon { padding: 0.5rem; border-radius: 0.5rem; transition: all 0.2s; }
+.btn-icon:hover { background-color: #f1f5f9; }
+
+.badge { padding: 0.25rem 0.75rem; border-radius: 9999px; font-size: 0.75rem; font-weight: 600; }
+
+/* --- Image Viewer --- */
+.viewer-overlay { position: fixed; inset: 0; z-index: 60; background: rgba(0,0,0,0.95); display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.3s; }
+.viewer-overlay.active { opacity: 1; pointer-events: auto; }
+.viewer-overlay img { max-width: 95%; max-height: 95%; object-fit: contain; border-radius: 0.5rem; }
+
+/* --- Modal --- */
+.modal-overlay { position: fixed; inset: 0; z-index: 50; background: rgba(0, 0, 0, 0.5); backdrop-filter: blur(4px); opacity: 0; pointer-events: none; transition: opacity 0.3s ease; display: flex; align-items: center; justify-content: flex-end; }
+.modal-overlay.active { opacity: 1; pointer-events: auto; }
+.modal-panel { background: white; width: 100%; height: 100%; max-width: 400px; max-height: 100vh; transform: translateX(100%); transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1); box-shadow: -10px 0 40px rgba(0,0,0,0.2); overflow-y: auto; }
+.modal-overlay.active .modal-panel { transform: translateX(0); }
+
+@media (min-width: 640px) {
+    .modal-panel { border-radius: 1.5rem; height: auto; max-height: 90vh; margin: 2rem; }
+    .modal-overlay { justify-content: center; }
+}
+
+/* --- Table Style for Logs --- */
+.log-table { width: 100%; border-collapse: separate; border-spacing: 0; }
+.log-table th { text-align: right; padding: 12px 16px; background-color: #f8fafc; color: #64748b; font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em; border-bottom: 1px solid #e2e8f0; }
+.log-table td { padding: 12px 16px; border-bottom: 1px solid #f1f5f9; font-size: 13px; color: #334155; }
+.log-table tr:hover td { background-color: #f8fafc; }
