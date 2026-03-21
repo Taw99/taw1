@@ -7,9 +7,10 @@
     <title>EgyBev</title>
     
     <!-- Manifest & Icons -->
-    <link rel="icon" type="image/png" href="https://cdn-icons-png.flaticon.com/512/2942/2942813.png">
-    <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/2942/2942813.png">
-    <link rel="manifest" href="data:application/json;base64,eyJuYW1lIjoiRWd5QmV2IEhSIiwic2hvcnRfbmFtZSI6IkVneUJldiIsInN0YXJ0X3VybCI6Ii4iLCJkaXNwbGF5Ijoic3RhbmRhbG9uZSIsImJhY2tncm91bmRfY29sb3IiOiIjZjFmNWY5IiwidGhlbWVfY29sb3IiOiIjMGY3NjZlIiwiaWNvbnMiOlt7InNyYyI6Imh0dHBzOi8vY2RuLWljb25zLXBuZy5mbGF0aWNvbi5jb20vNTEyLzI5NDIvMjk0MjgxMy5wbmciLCJzaXplcyI6IjE5MngxOTIiLCJ0eXBlIjoiaW1hZ2UvcG5nIiwicHVycG9zZSI6ImFueSBtYXNrYWJsZSJ9XX0=">
+    <!-- تأكد من وجود الصورة بجانب الملف بهذا الاسم -->
+    <link rel="icon" type="image/png" href="Gemini_Generated_Image_2b7z1w2b7z.png">
+    <link rel="apple-touch-icon" href="Gemini_Generated_Image_2b7z1w2b7z.png">
+    <link rel="manifest" href="data:application/json;base64,eyJuYW1lIjoiRWd5QmV2IEhSIiwic2hvcnRfbmFtZSI6IkVneUJldiIsInN0YXJ0X3VybCI6Ii4iLCJkaXNwbGF5Ijoic3RhbmRhbG9uZSIsImJhY2tncm91bmRfY29sb3IiOiIjZjFmNWY5IiwidGhlbWVfY29sb3IiOiIjMGY3NjZlIiwiaWNvbnMiOlt7InNyYyI6IkdlbWluaV9HZW5lcmF0ZWRfSW1hZ2VfMmJ3ejF3MmI3ei5wbmciLCJzaXplcyI6IjE5MngxOTIiLCJ0eXBlIjoiaW1hZ2UvcG5nIiwicHVycG9zZSI6ImFueSBtYXNrYWJsZSJ9XX0=">
 
     <!-- Libraries -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -22,13 +23,13 @@
             --primary: #0f766e; 
             --primary-light: #14b8a6; 
             --accent: #f97316; 
-            --bg-color: #f8fafc; 
+            --bg-color: #f0f4f8; 
             --card-bg: #ffffff; 
         }
         body { 
             font-family: 'IBM Plex Sans Arabic', sans-serif; 
             background-color: var(--bg-color); 
-            color: #334155; 
+            color: #1e293b; 
             -webkit-font-smoothing: antialiased; 
             overflow-x: hidden; 
         }
@@ -42,58 +43,91 @@
         .sidebar-panel.active { transform: translateX(0); }
 
         /* Components */
-        .card { background: var(--card-bg); border-radius: 1.25rem; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05); border: 1px solid rgba(241, 245, 249, 1); }
+        .card { background: var(--card-bg); border-radius: 1.5rem; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05); border: none; transition: transform 0.2s, box-shadow 0.2s; }
         input, select, textarea { font-size: 16px !important; background-color: #f8fafc; border: 1px solid #e2e8f0 !important; transition: all 0.2s; border-radius: 0.75rem; }
         input:focus, select:focus, textarea:focus { background-color: white; border-color: var(--primary-light) !important; box-shadow: 0 0 0 3px rgba(20, 184, 166, 0.15) !important; }
         
         /* Animations */
-        .slide-up { animation: slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
-        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .slide-up { animation: slideUp 0.5s cubic-bezier(0.16, 1, 0.3, 1); }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
         
         /* Modal */
-        .modal-overlay { position: fixed; inset: 0; z-index: 50; background: rgba(0, 0, 0, 0.5); opacity: 0; pointer-events: none; transition: opacity 0.3s ease; display: flex; align-items: center; justify-content: center; }
+        .modal-overlay { position: fixed; inset: 0; z-index: 50; background: rgba(0, 0, 0, 0.4); backdrop-filter: blur(2px); opacity: 0; pointer-events: none; transition: opacity 0.3s ease; display: flex; align-items: center; justify-content: center; }
         .modal-overlay.active { opacity: 1; pointer-events: auto; }
-        .modal-panel { background: white; width: 100%; max-width: 400px; max-height: 90vh; border-radius: 1.5rem; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25); overflow-y: auto; transform: scale(0.95); transition: transform 0.3s ease; margin: 1rem; }
-        .modal-overlay.active .modal-panel { transform: scale(1); }
+        .modal-panel { background: white; width: 100%; max-width: 400px; max-height: 90vh; border-radius: 1.5rem; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25); overflow-y: auto; transform: scale(0.95) translateY(20px); transition: transform 0.3s ease, opacity 0.3s ease; margin: 1rem; opacity: 0; }
+        .modal-overlay.active .modal-panel { transform: scale(1) translateY(0); opacity: 1; }
         
         /* Utilities */
-        .btn-primary { background: linear-gradient(135deg, #0f766e 0%, #14b8a6 100%); color: white; }
-        .notif-dropdown { position: absolute; top: 45px; left: 0; width: 300px; background: white; border-radius: 1rem; border: 1px solid #e2e8f0; z-index: 100; display: none; }
-        .notif-dropdown.active { display: block; }
+        .btn-primary { background: linear-gradient(135deg, #0f766e 0%, #14b8a6 100%); color: white; transition: transform 0.1s; }
+        .btn-primary:active { transform: scale(0.98); }
+        
+        .notif-dropdown { position: absolute; top: 50px; left: 0; width: 320px; background: white; border-radius: 1rem; border: 1px solid #e2e8f0; z-index: 100; display: none; box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
+        .notif-dropdown.active { display: block; animation: fadeIn 0.2s ease; }
         
         /* Specific Components */
-        .score-circle { width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.75rem; color: white; }
-        .status-card { transition: all 0.3s ease; border-right: 4px solid transparent; background: white; }
+        .score-circle { width: 42px; height: 42px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.75rem; color: white; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .status-card { transition: all 0.3s ease; border-right: 4px solid transparent; background: white; border-radius: 1rem; }
         .status-available { border-right-color: #10b981; background: linear-gradient(to left, #f0fdf4, white); }
-        .status-leave { border-right-color: #9ca3af; background: linear-gradient(to left, #f9fafb, white); }
+        .status-leave { border-right-color: #94a3b8; background: linear-gradient(to left, #f8fafc, white); }
         .status-warning { border-right-color: #f59e0b; background: linear-gradient(to left, #fffbeb, white); }
 
         /* Report Cards */
         .day-row { display: flex; align-items: stretch; gap: 0.5rem; margin-bottom: 0.5rem; }
-        .day-card { flex: 1; background: white; border-radius: 0.75rem; padding: 0.75rem; border: 1px solid #e2e8f0; display: flex; align-items: center; justify-content: space-between; cursor: pointer; transition: all 0.2s; }
-        .day-card:hover { border-color: #14b8a6; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
-        .workforce-card { width: 140px; flex-shrink: 0; background: #f8fafc; border-radius: 0.75rem; padding: 0.5rem; border: 1px solid #e2e8f0; display: flex; flex-direction: column; justify-content: center; align-items: center; text-center; position: relative; }
-        .edit-wf-btn { position: absolute; top: 2px; left: 2px; padding: 2px; background: white; border-radius: 4px; border: 1px solid #e2e8f0; color: #6b7280; cursor: pointer; }
-        .edit-wf-btn:hover { background: #f3f4f6; color: #111; }
+        .day-card { flex: 1; background: white; border-radius: 1rem; padding: 0.75rem; border: 1px solid #e2e8f0; display: flex; align-items: center; justify-content: space-between; cursor: pointer; transition: all 0.2s; }
+        .day-card:hover { border-color: #14b8a6; box-shadow: 0 2px 8px rgba(0,0,0,0.05); transform: translateY(-1px); }
+        .workforce-card { width: 140px; flex-shrink: 0; background: white; border-radius: 1rem; padding: 0.5rem; border: 1px solid #e2e8f0; display: flex; flex-direction: column; justify-content: center; align-items: center; text-center; position: relative; }
+        .edit-wf-btn { position: absolute; top: 4px; left: 4px; padding: 2px; background: white; border-radius: 6px; border: 1px solid #e2e8f0; color: #6b7280; cursor: pointer; transition: all 0.2s; }
+        .edit-wf-btn:hover { background: #f1f5f9; color: #0f172a; }
+
+        /* Balance Card Styles */
+        .balance-card-bg {
+            background: linear-gradient(135deg, #115e59 0%, #0f766e 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        .balance-card-bg::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            pointer-events: none;
+        }
+        
+        /* Login Page Specific */
+        .login-bg {
+            background: linear-gradient(135deg, #f0fdfa 0%, #e0f2fe 100%);
+        }
     </style>
 </head>
-<body>
+<body class="login-bg">
     <div id="toast-container" class="fixed top-4 left-1/2 -translate-x-1/2 z-[100] space-y-2 pointer-events-none"></div>
     
     <!-- Sidebar Structure -->
     <div id="sidebar-backdrop" class="sidebar-backdrop" onclick="toggleSidebar()"></div>
     <aside id="sidebar-panel" class="sidebar-panel">
         <div class="flex flex-col h-full">
-            <div class="p-6 bg-gradient-to-br from-teal-700 to-teal-800 text-white rounded-tr-3xl">
-                <div class="flex justify-between items-start mb-4">
-                    <div class="bg-white/20 p-2 rounded-xl backdrop-blur"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg></div>
-                    <button onclick="toggleSidebar()" class="hover:bg-white/20 p-1 rounded-full transition"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg></button>
+            <div class="p-6 bg-gradient-to-br from-teal-700 to-teal-900 text-white rounded-tr-3xl relative overflow-hidden">
+                <div class="absolute top-0 left-0 w-full h-full opacity-10">
+                     <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><path fill="#FFFFFF" d="M44.7,-76.4C58.8,-69.2,71.8,-59.1,79.6,-45.8C87.3,-32.5,89.9,-16.3,87.8,-1.3C85.7,13.8,78.9,28.7,69.6,40.1C60.3,51.5,48.5,59.4,35.8,66.5C23.1,73.6,9.6,80,-3.8,84.3C-17.2,88.6,-30.6,90.8,-42.5,85.3C-54.4,79.8,-64.8,66.6,-71.3,51.8C-77.8,37,-80.3,20.5,-78.4,5.1C-76.5,-10.4,-70.1,-24.8,-61.3,-37.1C-52.5,-49.4,-41.3,-59.6,-28.5,-67.5C-15.7,-75.4,-1.3,-81,12.8,-80.6C26.9,-80.2,40.7,-73.8,44.7,-76.4Z" transform="translate(100 100)" /></svg>
                 </div>
-                <h2 id="menu-user-name" class="text-xl font-bold">مرحباً</h2>
-                <p id="menu-user-role" class="text-sm text-teal-100 mt-1"></p>
+                <div class="relative z-10">
+                    <div class="flex justify-between items-start mb-4">
+                        <div class="bg-white/20 p-2 rounded-xl backdrop-blur">
+                             <!-- App Icon in Sidebar -->
+                            <img src="Gemini_Generated_Image_2b7z1w2b7z.png" class="w-8 h-8 object-contain" alt="App Icon">
+                        </div>
+                        <button onclick="toggleSidebar()" class="hover:bg-white/20 p-1 rounded-full transition"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg></button>
+                    </div>
+                    <h2 id="menu-user-name" class="text-xl font-bold">مرحباً</h2>
+                    <p id="menu-user-role" class="text-sm text-teal-100 mt-1"></p>
+                </div>
             </div>
             <nav class="flex-1 p-4 space-y-1 overflow-y-auto" id="menu-items"></nav>
-            <div class="p-4 border-t">
+            <div class="p-4 border-t border-gray-100">
                 <button onclick="logoutUser()" class="w-full flex items-center justify-center gap-2 py-2.5 text-red-500 hover:bg-red-50 rounded-xl transition font-semibold">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>
                     <span>تسجيل الخروج</span>
@@ -104,13 +138,13 @@
 
     <div class="app-shell">
         <!-- Header -->
-        <header id="main-header" class="hidden flex-shrink-0 bg-white/80 backdrop-blur-lg border-b border-gray-100 sticky top-0 z-30">
+        <header id="main-header" class="hidden flex-shrink-0 bg-white/90 backdrop-blur-lg border-b border-gray-100 sticky top-0 z-30">
             <div class="flex items-center justify-between px-4 py-3">
                 <button onclick="toggleSidebar()" class="p-2 text-gray-500 hover:text-teal-600 hover:bg-gray-100 rounded-lg transition">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
                 </button>
                 <div class="flex items-center gap-3">
-                    <div id="header-balance" class="hidden bg-teal-50 text-teal-700 text-xs px-3 py-1.5 rounded-full font-semibold cursor-pointer hover:bg-teal-100 transition" onclick="navigateTo('emp-balance')"></div>
+                    <div id="header-balance" class="hidden bg-teal-50 text-teal-700 text-xs px-3 py-1.5 rounded-full font-semibold cursor-pointer hover:bg-teal-100 transition shadow-sm" onclick="navigateTo('emp-balance')"></div>
                     <div class="relative">
                         <button id="notif-btn" onclick="toggleNotifDropdown()" class="p-2 text-gray-500 hover:text-teal-600 hover:bg-gray-100 rounded-lg transition relative">
                             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path></svg>
@@ -122,7 +156,10 @@
                         </div>
                     </div>
                     <div class="flex items-center gap-2">
-                        <div class="w-9 h-9 bg-gradient-to-br from-teal-600 to-teal-700 rounded-xl flex items-center justify-center shadow-sm"><svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg></div>
+                        <div class="w-9 h-9 bg-gradient-to-br from-teal-600 to-teal-700 rounded-xl flex items-center justify-center shadow-sm">
+                             <!-- App Icon in Header -->
+                            <img src="Gemini_Generated_Image_2b7z1w2b7z.png" class="w-5 h-5 object-contain" alt="Logo">
+                        </div>
                         <h1 class="text-lg font-bold text-gray-800">EgyBev</h1>
                     </div>
                 </div>
@@ -131,36 +168,50 @@
         
         <main class="flex-1 overflow-y-auto p-4 pb-24">
             <!-- Login Section -->
-            <section id="login-section" class="flex items-center justify-center h-full">
+            <section id="login-section" class="hidden flex items-center justify-center h-full">
                 <div class="w-full max-w-sm slide-up">
-                    <div class="text-center mb-8">
-                        <div class="w-20 h-20 bg-teal-50 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-inner"><svg class="w-10 h-10 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg></div>
-                        <h2 class="text-3xl font-bold text-gray-800">مرحباً بعودتك</h2>
+                    <div class="text-center mb-10">
+                        <div class="w-32 h-32 mx-auto mb-6 relative">
+                           <div class="absolute inset-0 bg-teal-200 rounded-full animate-pulse opacity-50"></div>
+                           <div class="absolute inset-0 bg-teal-100 rounded-full animate-pulse opacity-75" style="animation-delay: 0.2s"></div>
+                           <div class="relative w-32 h-32 bg-white rounded-full flex items-center justify-center shadow-2xl border-4 border-white">
+                                <!-- App Icon Large -->
+                                <img src="Gemini_Generated_Image_2b7z1w2b7z.png" class="w-20 h-20 object-contain" alt="App Icon">
+                           </div>
+                        </div>
+                        <h2 class="text-3xl font-extrabold text-gray-800 tracking-tight">أهلاً بك</h2>
+                        <p class="text-gray-400 mt-2 text-sm">قم بتسجيل الدخول للمتابعة</p>
                     </div>
-                    <form id="login-form" class="space-y-4 card p-6">
-                        <div><label class="text-xs font-medium text-gray-600 mb-1 block">اسم المستخدم</label><input type="text" id="username" class="w-full px-4 py-3 outline-none" required autocomplete="off"></div>
-                        <div><label class="text-xs font-medium text-gray-600 mb-1 block">كلمة المرور</label><input type="password" id="password" class="w-full px-4 py-3 outline-none" required autocomplete="off"></div>
-                        <button type="submit" class="w-full btn-primary font-bold py-3 rounded-xl transition shadow-lg">تسجيل الدخول</button>
-                        <p id="login-err" class="text-red-500 text-xs text-center hidden bg-red-50 p-2 rounded-lg">بيانات الدخول غير صحيحة</p>
+                    <form id="login-form" class="space-y-5 card p-6">
+                        <div>
+                            <label class="text-xs font-semibold text-gray-500 mb-1.5 block">اسم المستخدم</label>
+                            <input type="text" id="username" class="w-full px-4 py-3 outline-none" required autocomplete="off" placeholder="أدخل اسم المستخدم">
+                        </div>
+                        <div>
+                            <label class="text-xs font-semibold text-gray-500 mb-1.5 block">كلمة المرور</label>
+                            <input type="password" id="password" class="w-full px-4 py-3 outline-none" required autocomplete="off" placeholder="أدخل كلمة المرور">
+                        </div>
+                        <button type="submit" class="w-full btn-primary font-bold py-3 rounded-xl transition shadow-lg shadow-teal-500/30 text-base">تسجيل الدخول</button>
+                        <p id="login-err" class="text-red-500 text-xs text-center hidden bg-red-50 p-3 rounded-lg border border-red-100">بيانات الدخول غير صحيحة</p>
                     </form>
                 </div>
             </section>
             
             <!-- Dashboard Container -->
             <section id="dashboard-container" class="hidden space-y-4">
-                <div id="page-emp-balance" class="page hidden slide-up"></div>
-                <div id="page-tasks" class="page hidden slide-up"></div>
-                <div id="page-leaves" class="page hidden slide-up"></div>
-                <div id="page-overtime" class="page hidden slide-up"></div>
-                <div id="page-mgr-balance" class="page hidden slide-up"></div>
-                <div id="page-mgr-logs" class="page hidden slide-up"></div>
-                <div id="page-mgr-reports" class="page hidden slide-up"></div>
-                <div id="page-mgr-analytics" class="page hidden slide-up"></div>
+                <div id="page-emp-balance" class="page hidden"></div>
+                <div id="page-tasks" class="page hidden"></div>
+                <div id="page-leaves" class="page hidden"></div>
+                <div id="page-overtime" class="page hidden"></div>
+                <div id="page-mgr-balance" class="page hidden"></div>
+                <div id="page-mgr-logs" class="page hidden"></div>
+                <div id="page-mgr-reports" class="page hidden"></div>
+                <div id="page-mgr-analytics" class="page hidden"></div>
             </section>
         </main>
         
         <!-- Floating Action Button -->
-        <button id="fab-btn" class="fixed bottom-6 right-6 bg-orange-500 text-white w-14 h-14 rounded-2xl flex items-center justify-center text-2xl z-20 active:scale-90 transition shadow-lg shadow-orange-200 hidden"><svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg></button>
+        <button id="fab-btn" class="hidden fixed bottom-6 right-6 bg-gradient-to-r from-orange-500 to-amber-500 text-white w-14 h-14 rounded-2xl flex items-center justify-center text-2xl z-20 active:scale-95 transition shadow-lg shadow-orange-500/30"><svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg></button>
     </div>
 
     <!-- Modal Container -->
@@ -199,11 +250,14 @@
         let dailyEvaluations = []; 
         let analyticsFilter = 'month'; 
 
+        // --- Constants ---
+        const MAX_LEAVE_BALANCE = 60;
+
         // --- Helper Functions ---
         const $ = id => document.getElementById(id);
         const show = id => { if($(id)) $(id).classList.remove('hidden') };
         const hide = id => { if($(id)) $(id).classList.add('hidden') };
-        const showToast = (msg, type = 'success') => { const c = $('toast-container'); const t = document.createElement('div'); t.className = `pointer-events-auto px-4 py-2 rounded-xl shadow-lg text-white text-sm font-medium mb-2 ${type === 'success' ? 'bg-teal-600' : 'bg-red-500'}`; t.textContent = msg; c.appendChild(t); setTimeout(() => t.remove(), 3000); };
+        const showToast = (msg, type = 'success') => { const c = $('toast-container'); const t = document.createElement('div'); t.className = `pointer-events-auto px-4 py-2 rounded-xl shadow-lg text-white text-sm font-medium mb-2 ${type === 'success' ? 'bg-teal-600' : (type === 'error' ? 'bg-red-500' : 'bg-amber-500')}`; t.textContent = msg; c.appendChild(t); setTimeout(() => t.remove(), 4000); };
         const formatDate = (d) => { if (!d) return '-'; const date = d.toDate ? d.toDate() : new Date(d); const day = String(date.getDate()).padStart(2, '0'); const month = String(date.getMonth() + 1).padStart(2, '0'); const year = date.getFullYear(); return `${day}/${month}/${year}`; };
         const calcDur = (s, e) => { const d1 = new Date(s), d2 = new Date(e); if (d2 < d1) return { days: 0, hours: 0, totalHours: 0 }; const days = Math.ceil(Math.abs(d2 - d1) / (1000 * 60 * 60 * 24)) + 1; return { days, hours: 0, totalHours: days * 8 }; };
         
@@ -218,6 +272,7 @@
         window.toggleSidebar = () => { $('sidebar-panel').classList.toggle('active'); $('sidebar-backdrop').classList.toggle('active'); };
         
         function renderSidebar() { 
+            if (!currentUser) return;
             $('menu-user-name').textContent = currentUser.displayName; 
             $('menu-user-role').textContent = currentUser.role === 'manager' ? 'صلاحية المدير' : 'صلاحية الموظف'; 
             const menu = $('menu-items'); menu.innerHTML = ''; 
@@ -243,15 +298,28 @@
             } 
         }
         
-        function navigateTo(pageId) { currentPage = pageId; document.querySelectorAll('.page').forEach(p => p.classList.add('hidden')); show(`page-${pageId}`); renderSidebar(); const fab = $('fab-btn'); if (currentUser.role === 'employee' && (pageId === 'leaves' || pageId === 'overtime')) { fab.classList.remove('hidden'); fab.onclick = () => openLeaveModal(); } else if (currentUser.role === 'manager' && pageId === 'tasks') { fab.classList.remove('hidden'); fab.onclick = () => openTaskModal(); } else { fab.classList.add('hidden'); } updateContent(); }
+        // --- Navigation Logic ---
+        function navigateTo(pageId) { 
+            currentPage = pageId; 
+            localStorage.setItem('lastPage', pageId); 
+            
+            document.querySelectorAll('.page').forEach(p => p.classList.add('hidden')); 
+            show(`page-${pageId}`); 
+            renderSidebar(); 
+            const fab = $('fab-btn'); 
+            if (currentUser.role === 'employee' && (pageId === 'leaves' || pageId === 'overtime')) { fab.classList.remove('hidden'); fab.onclick = () => openLeaveModal(); } 
+            else if (currentUser.role === 'manager' && pageId === 'tasks') { fab.classList.remove('hidden'); fab.onclick = () => openTaskModal(); } 
+            else { fab.classList.add('hidden'); } 
+            updateContent(); 
+        }
         
-        async function syncUsers() { if (!fbUser) return; USERS_CONFIG.filter(u => u.role === 'employee').forEach(async (u) => { const ref = doc(db, `artifacts/${APP_ID}/public/data/employees`, u.id); if (!(await getDoc(ref)).exists()) await setDoc(ref, { balanceDays: 21, balanceHours: 0, displayName: u.displayName, metrics: {} }); }); }
+        async function syncUsers() { if (!fbUser) return; USERS_CONFIG.filter(u => u.role === 'employee').forEach(async (u) => { const ref = doc(db, `artifacts/${APP_ID}/public/data/employees`, u.id); if (!(await getDoc(ref)).exists()) await setDoc(ref, { totalBalance: 21, usedBalance: 0, remainingBalance: 21, displayName: u.displayName, metrics: {} }); }); }
         async function logTx(empId, empName, type, val, notes) { await addDoc(collection(db, `artifacts/${APP_ID}/public/data/balance_logs`), { employeeId: empId, employeeName: empName, type, value: val, notes, date: new Date() }); }
         
         // --- Export Functions ---
         window.exportToExcel = () => { if(leaves.length === 0) return showToast("لا توجد بيانات", "error"); const data = leaves.map(l => { const start = l.startDate?.toDate ? l.startDate.toDate() : new Date(l.startDate); const end = l.endDate?.toDate ? l.endDate.toDate() : new Date(l.endDate); const dur = calcDur(l.startDate, l.endDate); const returnDate = new Date(end); returnDate.setDate(returnDate.getDate() + 1); return { 'الموظف': l.employeeName, 'نوع الإجازة': l.type, 'من تاريخ': start.toLocaleDateString('ar-EG'), 'إلى تاريخ': end.toLocaleDateString('ar-EG'), 'عدد الأيام': dur.days, 'تاريخ العودة': returnDate.toLocaleDateString('ar-EG'), 'الحالة': l.status === 'Approved' ? 'مقبول' : (l.status === 'Pending' ? 'معلق' : 'مرفوض') }; }); const worksheet = XLSX.utils.json_to_sheet(data); const workbook = XLSX.utils.book_new(); XLSX.utils.book_append_sheet(workbook, worksheet, "سجل الاجازات"); XLSX.writeFile(workbook, `EgyBev_Leaves.xlsx`); showToast("تم التحميل"); };
         window.exportLogsToExcel = () => { if(balanceLogs.length === 0) return showToast("لا توجد حركات", "error"); const data = balanceLogs.map(log => ({ 'الموظف': log.employeeName, 'النوع': log.type === 'adjustment' ? 'إضافة' : 'خصم', 'الأيام': log.value.days, 'ملاحظات': log.notes, 'التاريخ': (log.date?.toDate() || new Date()).toLocaleDateString('ar-EG') })); const ws = XLSX.utils.json_to_sheet(data); const wb = XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb, ws, "سجل الأرصدة"); XLSX.writeFile(wb, `EgyBev_Balance_Logs.xlsx`); showToast("تم التصدير"); };
-        window.exportPerformance = () => { const data = calculatePerformanceStats().map(d => ({ 'الموظف': d.displayName, 'النتيجة النهائية (%)': d.finalPercentage, 'مجموع النقاط': d.totalScore, 'عدد أيام التقييم': d.evalDays, 'إجمالي الغياب': d.totalDays, 'معامل برادفورد': d.bradfordFactor })); const ws = XLSX.utils.json_to_sheet(data); const wb = XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb, ws, "تقرير الأداء"); XLSX.writeFile(wb, `EgyBev_Performance_Report.xlsx`); showToast("تم تحميل التقرير"); };
+        window.exportPerformance = () => { const stats = calculatePerformanceStats(); const data = stats.map(d => ({ 'الموظف': d.displayName, 'النتيجة النهائية (%)': d.finalPercentage, 'مجموع النقاط': d.totalScore, 'عدد أيام التقييم': d.evalDays, 'إجمالي الغياب': d.totalDays, 'معامل برادفورد': d.bradfordFactor })); const ws = XLSX.utils.json_to_sheet(data); const wb = XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb, ws, "تقرير الأداء"); XLSX.writeFile(wb, `EgyBev_Performance_Report.xlsx`); showToast("تم تحميل التقرير"); };
 
         // --- Status Helper ---
         function getEmployeeStatus(empId) { const today = new Date(); today.setHours(0,0,0,0); const currentLeave = leaves.find(l => { if(l.employeeId !== empId || l.status !== 'Approved') return false; const start = new Date(l.startDate); const end = new Date(l.endDate); start.setHours(0,0,0,0); end.setHours(0,0,0,0); return today >= start && today <= end; }); if (currentLeave) { const end = new Date(currentLeave.endDate); end.setHours(0,0,0,0); const diffTime = Math.abs(end - today); const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); return { status: 'leave', text: `في إجازة`, subText: `عائد بعد ${diffDays} يوم`, color: 'gray' }; } const tomorrow = new Date(today); tomorrow.setDate(tomorrow.getDate() + 1); const upcomingLeave = leaves.find(l => { if(l.employeeId !== empId || l.status !== 'Approved') return false; const start = new Date(l.startDate); start.setHours(0,0,0,0); return start.getTime() === tomorrow.getTime(); }); if (upcomingLeave) return { status: 'warning', text: 'إجازة غداً', subText: upcomingLeave.type, color: 'yellow' }; return { status: 'available', text: 'موجود', subText: 'متاح للعمل', color: 'green' }; }
@@ -260,22 +328,60 @@
         function updateContent() {
             if (!currentUser) return;
             if (currentUser.role === 'employee') {
-                const data = employeesData[currentUser.id] || {}; $('header-balance').textContent = `${data.balanceDays || 0} ي`; show('header-balance');
-                if (currentPage === 'emp-balance') $('page-emp-balance').innerHTML = `<div class="card overflow-hidden"><div class="bg-gradient-to-br from-teal-600 to-teal-800 p-6 text-white rounded-t-2xl"><p class="text-teal-100 text-sm font-medium">رصيدك الحالي</p><div class="flex items-end gap-4 mt-2"><div class="flex items-baseline gap-1"><span class="text-5xl font-bold">${data.balanceDays || 0}</span><span class="text-xl text-teal-200">يوم</span></div></div></div></div>`;
+                const data = employeesData[currentUser.id] || { totalBalance: 0, usedBalance: 0, remainingBalance: 0 }; 
+                $('header-balance').textContent = `${data.remainingBalance || 0} ي`; 
+                show('header-balance');
+
+                if (currentPage === 'emp-balance') {
+                    const used = data.usedBalance || 0;
+                    const total = data.totalBalance || 0;
+                    const remaining = data.remainingBalance || 0;
+                    
+                    $('page-emp-balance').innerHTML = `
+                        <div class="card overflow-hidden mb-4">
+                            <div class="balance-card-bg p-6 text-white rounded-t-2xl relative">
+                                <p class="text-teal-100 text-sm font-medium">الرصيد المتبقي</p>
+                                <div class="flex items-end gap-2 mt-2">
+                                    <div class="flex items-baseline gap-1">
+                                        <span class="text-5xl font-bold tracking-tight">${remaining}</span>
+                                        <span class="text-xl text-teal-200">يوم</span>
+                                    </div>
+                                </div>
+                                <div class="mt-5 grid grid-cols-2 gap-4 border-t border-white/20 pt-4">
+                                    <div>
+                                        <p class="text-teal-200 text-xs">المستحق</p>
+                                        <p class="font-bold text-lg">${total} يوم</p>
+                                    </div>
+                                    <div>
+                                        <p class="text-teal-200 text-xs">المستهلك</p>
+                                        <p class="font-bold text-lg text-amber-300">${used} يوم</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card p-4 bg-gradient-to-r from-blue-50 to-white border border-blue-100">
+                            <h4 class="font-bold text-blue-800 mb-1 text-sm flex items-center gap-2">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                معلومة
+                            </h4>
+                            <p class="text-xs text-gray-600">يتم خصم أيام الإجازة الاعتيادية والطارئة. الإجازات المرضية لا تخصم من الرصيد.</p>
+                        </div>
+                    `;
+                }
                 if (currentPage === 'tasks') $('page-tasks').innerHTML = `<div class="card p-5"><h3 class="font-bold text-lg text-gray-800 mb-4">مهامي</h3><div class="space-y-3">${tasks.filter(t => (t.assigneeId === currentUser.id || t.assigneeId === 'all') && (t.assigneeId === 'all' ? !(t.completedBy?.some(c => c.id === currentUser.id)) : !t.completed)).length === 0 ? '<div class="text-center py-8 text-gray-400 text-sm">لا مهام معلقة</div>' : tasks.filter(t => (t.assigneeId === currentUser.id || t.assigneeId === 'all') && (t.assigneeId === 'all' ? !(t.completedBy?.some(c => c.id === currentUser.id)) : !t.completed)).map(t => `<div class="flex justify-between items-center bg-gray-50 p-3 rounded-lg border border-gray-100"><p class="font-medium text-sm text-gray-700">${t.description}</p><button class="bg-teal-50 text-teal-600 px-3 py-1.5 rounded-lg text-xs font-semibold hover:bg-teal-100 transition" onclick="completeTask('${t.id}')">إنجاز</button></div>`).join('')}</div></div>`;
                 if (currentPage === 'leaves') $('page-leaves').innerHTML = `<div class="card p-5"><h3 class="font-bold text-lg text-gray-800 mb-4">طلبات الإجازات</h3><div class="space-y-2">${leaves.filter(l => l.employeeId === currentUser.id).sort((a,b) => b.date - a.date).length === 0 ? '<p class="text-gray-400 text-center py-4 text-sm">لم تقم بتقديم طلبات بعد</p>' : leaves.filter(l => l.employeeId === currentUser.id).sort((a,b) => b.date - a.date).map(l => { const statusBadge = l.status === 'Pending' ? 'bg-amber-100 text-amber-700' : (l.status === 'Approved' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'); return `<div class="border-r-4 ${l.status === 'Pending' ? 'border-amber-400 bg-amber-50' : (l.status === 'Approved' ? 'border-green-400 bg-green-50' : 'border-red-400 bg-red-50')} p-3 rounded-lg shadow-xs"><div class="flex justify-between items-center mb-1"><span class="font-bold text-sm text-gray-800">${l.type}</span><span class="text-[10px] px-2 py-0.5 rounded-full ${statusBadge} font-semibold">${l.status === 'Pending' ? 'معلق' : (l.status === 'Approved' ? 'مقبول' : 'مرفوض')}</span></div><p class="text-xs text-gray-500">${formatDate(l.startDate)} - ${formatDate(l.endDate)}</p></div>`; }).join('')}</div></div>`;
                 if (currentPage === 'overtime') $('page-overtime').innerHTML = `<div class="card p-5"><div class="flex justify-between items-center mb-4"><h3 class="font-bold text-lg text-gray-800">سجل الوقت الإضافي</h3><button onclick="openOvertimeModal()" class="bg-indigo-500 text-white px-3 py-1.5 rounded-lg text-xs font-bold">تسجيل جديد</button></div><div class="space-y-2">${overtimeLogs.filter(o => o.employeeId === currentUser.id).sort((a,b) => b.date?.seconds - a.date?.seconds).length === 0 ? '<p class="text-gray-400 text-center py-4 text-sm">لا توجد سجلات</p>' : overtimeLogs.filter(o => o.employeeId === currentUser.id).sort((a,b) => b.date?.seconds - a.date?.seconds).map(o => { const statusBadge = o.status === 'Pending' ? 'bg-amber-100 text-amber-700' : (o.status === 'Approved' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'); return `<div class="bg-gray-50 p-3 rounded-lg border flex justify-between items-center"><div><p class="font-bold text-sm text-indigo-600">${o.hours} ساعات</p><p class="text-[11px] text-gray-500">${formatDate(o.date)}</p></div><span class="text-[10px] px-2 py-0.5 rounded-full ${statusBadge} font-semibold">${o.status === 'Pending' ? 'معلق' : (o.status === 'Approved' ? 'مقبول' : 'مرفوض')}</span></div>`; }).join('')}</div></div>`;
             } 
             else {
                 hide('header-balance');
-                if (currentPage === 'mgr-balance') { const totalEmps = USERS_CONFIG.filter(u => u.role === 'employee').length; let availableCount = 0, leaveCount = 0, warningCount = 0; const employeesHtml = USERS_CONFIG.filter(u=>u.role==='employee').map(u => { const data = employeesData[u.id] || {}; const statusInfo = getEmployeeStatus(u.id); if(statusInfo.status === 'available') availableCount++; else if(statusInfo.status === 'leave') leaveCount++; else if(statusInfo.status === 'warning') warningCount++; let statusClass = ''; let statusIcon = ''; if(statusInfo.color === 'green') { statusClass = 'status-available'; statusIcon = `<svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>`; } else if(statusInfo.color === 'gray') { statusClass = 'status-leave'; statusIcon = `<svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>`; } else if(statusInfo.color === 'yellow') { statusClass = 'status-warning'; statusIcon = `<svg class="w-5 h-5 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>`; } return `<div class="status-card ${statusClass} p-4 rounded-xl shadow-sm flex flex-col gap-3 relative group"><div class="flex justify-between items-start"><div class="flex items-center gap-3"><div class="w-10 h-10 rounded-full bg-white border-2 border-gray-100 flex items-center justify-center font-bold text-sm text-gray-700 shadow-sm">${u.displayName.split(' ')[1]}</div><div><h4 class="font-bold text-gray-800">${u.displayName}</h4><p class="text-[11px] text-gray-500 mt-0.5">الرصيد: <span class="font-bold text-teal-600">${data.balanceDays || 0} يوم</span></p></div></div><button onclick="openEditBalanceModal('${u.id}')" class="absolute top-2 left-2 text-gray-400 hover:text-teal-600 p-1 rounded transition opacity-0 group-hover:opacity-100"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg></button></div><div class="flex justify-between items-center pt-2 border-t border-gray-100 border-dashed"><div class="flex items-center gap-2">${statusIcon}<span class="text-xs font-bold text-gray-700">${statusInfo.text}</span></div><span class="text-[10px] text-gray-400">${statusInfo.subText}</span></div></div>`; }).join(''); $('page-mgr-balance').innerHTML = `<div class="grid grid-cols-3 gap-2 mb-4"><div class="bg-green-50 border border-green-100 rounded-xl p-3 text-center"><span class="block text-2xl font-bold text-green-600">${availableCount}</span><span class="text-[10px] text-green-700 font-medium">موجود</span></div><div class="bg-amber-50 border border-amber-100 rounded-xl p-3 text-center"><span class="block text-2xl font-bold text-amber-500">${warningCount}</span><span class="text-[10px] text-amber-700 font-medium">تنبيه</span></div><div class="bg-gray-100 border border-gray-200 rounded-xl p-3 text-center"><span class="block text-2xl font-bold text-gray-500">${leaveCount}</span><span class="text-[10px] text-gray-600 font-medium">في إجازة</span></div></div><div class="card overflow-hidden p-2"><div class="grid grid-cols-1 md:grid-cols-2 gap-3">${employeesHtml}</div></div>`; }
+                if (currentPage === 'mgr-balance') { const totalEmps = USERS_CONFIG.filter(u => u.role === 'employee').length; let availableCount = 0, leaveCount = 0, warningCount = 0; const employeesHtml = USERS_CONFIG.filter(u=>u.role==='employee').map(u => { const data = employeesData[u.id] || {}; const statusInfo = getEmployeeStatus(u.id); if(statusInfo.status === 'available') availableCount++; else if(statusInfo.status === 'leave') leaveCount++; else if(statusInfo.status === 'warning') warningCount++; let statusClass = ''; let statusIcon = ''; if(statusInfo.color === 'green') { statusClass = 'status-available'; statusIcon = `<svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>`; } else if(statusInfo.color === 'gray') { statusClass = 'status-leave'; statusIcon = `<svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>`; } else if(statusInfo.color === 'yellow') { statusClass = 'status-warning'; statusIcon = `<svg class="w-5 h-5 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>`; } return `<div class="status-card ${statusClass} p-4 shadow-sm flex flex-col gap-3 relative group"><div class="flex justify-between items-start"><div class="flex items-center gap-3"><div class="w-10 h-10 rounded-full bg-white border-2 border-gray-100 flex items-center justify-center font-bold text-sm text-gray-700 shadow-sm">${u.displayName.split(' ')[1]}</div><div><h4 class="font-bold text-gray-800">${u.displayName}</h4><p class="text-[11px] text-gray-500 mt-0.5">المتبقي: <span class="font-bold text-teal-600">${data.remainingBalance || 0} يوم</span></p></div></div><button onclick="openEditBalanceModal('${u.id}')" class="absolute top-2 left-2 text-gray-400 hover:text-teal-600 p-1 rounded transition opacity-0 group-hover:opacity-100"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg></button></div><div class="flex justify-between items-center pt-2 border-t border-gray-100 border-dashed"><div class="flex items-center gap-2">${statusIcon}<span class="text-xs font-bold text-gray-700">${statusInfo.text}</span></div><span class="text-[10px] text-gray-400">${statusInfo.subText}</span></div></div>`; }).join(''); $('page-mgr-balance').innerHTML = `<div class="grid grid-cols-3 gap-2 mb-4"><div class="bg-green-50 border border-green-100 rounded-xl p-3 text-center"><span class="block text-2xl font-bold text-green-600">${availableCount}</span><span class="text-[10px] text-green-700 font-medium">موجود</span></div><div class="bg-amber-50 border border-amber-100 rounded-xl p-3 text-center"><span class="block text-2xl font-bold text-amber-500">${warningCount}</span><span class="text-[10px] text-amber-700 font-medium">تنبيه</span></div><div class="bg-gray-100 border border-gray-200 rounded-xl p-3 text-center"><span class="block text-2xl font-bold text-gray-500">${leaveCount}</span><span class="text-[10px] text-gray-600 font-medium">في إجازة</span></div></div><div class="card overflow-hidden p-2"><div class="grid grid-cols-1 md:grid-cols-2 gap-3">${employeesHtml}</div></div>`; }
                 if (currentPage === 'tasks') { $('page-tasks').innerHTML = `<div class="card p-5"><div class="mb-6 bg-gray-50 p-4 rounded-xl border border-gray-200"><h4 class="font-bold mb-3 text-sm text-gray-700">إضافة مهمة جديدة</h4><form id="add-task-form-mgr" class="space-y-2" onsubmit="addNewTask(event)"><textarea placeholder="وصف المهمة..." class="w-full rounded-xl p-2 text-sm outline-none resize-none" rows="2" required id="mgr-task-desc"></textarea><select class="w-full rounded-xl p-2 text-sm outline-none bg-white" required id="mgr-task-assignee"><option value="">اختر موظف</option>${USERS_CONFIG.filter(u=>u.role==='employee').map(u=>`<option value="${u.id}">${u.displayName}</option>`).join('')}<option value="all">الجميع</option></select><button class="w-full btn-primary text-white py-2 rounded-xl font-bold text-sm shadow-md">إضافة</button></form></div><h4 class="font-bold mb-2 text-xs text-gray-400 uppercase">المهام الحالية</h4><div class="space-y-2">${tasks.length === 0 ? '<p class="text-gray-400 text-center text-sm py-4">لا مهام</p>' : tasks.map(t => `<div class="p-3 bg-gray-50 rounded-xl border border-gray-100 text-sm"><div class="flex justify-between items-center"><div><p class="font-medium text-gray-800">${t.description}</p><p class="text-[10px] text-gray-400 mt-0.5">${t.assigneeName}</p></div><span class="text-[10px] px-2 py-1 rounded-full font-semibold ${t.completed ? 'bg-green-100 text-green-700' : 'bg-amber-100 text-amber-700'}">${t.completed ? 'منجز' : 'معلق'}</span></div></div>`).join('')}</div></div>`; }
-                if (currentPage === 'leaves') { const pending = leaves.filter(l => l.status === 'Pending'); const processed = leaves.filter(l => l.status !== 'Pending').sort((a,b) => b.date - a.date); const pendingOvertime = overtimeLogs.filter(o => o.status === 'Pending'); $('page-leaves').innerHTML = `<div class="card p-5"><h3 class="font-bold text-lg text-gray-800 mb-4">طلبات الإجازات</h3><div class="mb-6"><h4 class="font-bold mb-2 text-xs text-orange-600 flex items-center gap-1"><span class="w-1.5 h-1.5 bg-orange-500 rounded-full animate-pulse"></span>معلقة (${pending.length})</h4>${pending.length === 0 ? '<div class="text-center py-6 text-gray-400 text-xs">لا يوجد طلبات معلقة</div>' : pending.map(l => { const dur = calcDur(l.startDate, l.endDate); const bal = employeesData[l.employeeId] || {}; return `<div class="bg-white border border-gray-200 rounded-xl p-3 mb-2 shadow-xs"><div class="flex justify-between items-start mb-2"><div><h4 class="font-bold text-sm text-gray-800">${l.employeeName}</h4><p class="text-[11px] text-gray-500">${l.type} (${dur.days} أيام)</p></div><span class="text-[10px] bg-blue-50 text-blue-600 px-2 py-1 rounded-full font-medium">باقي: ${bal.balanceDays || 0}ي</span></div>${l.imageUrl ? `<div class="my-2 rounded overflow-hidden"><img src="${l.imageUrl}" onclick="viewImage('${l.imageUrl}')" class="w-full h-32 object-cover cursor-pointer hover:opacity-90 transition" alt="Image"></div>` : ''}<div class="flex gap-2 pt-2 border-t mt-2"><button onclick="handleLeave('${l.id}', 'Approved', ${dur.totalHours}, '${l.type}', '${l.employeeId}')" class="flex-1 bg-green-500 text-white py-1.5 rounded-lg text-xs font-bold hover:bg-green-600">قبول</button><button onclick="handleLeave('${l.id}', 'Rejected', 0, 'None', '${l.employeeId}')" class="flex-1 bg-red-100 text-red-600 py-1.5 rounded-lg text-xs font-bold hover:bg-red-200">رفض</button></div></div>`; }).join('')}</div><div class="mb-6 border-t pt-4"><h4 class="font-bold mb-2 text-xs text-indigo-600 flex items-center gap-1"><span class="w-1.5 h-1.5 bg-indigo-500 rounded-full animate-pulse"></span>طلات وقت إضافي (${pendingOvertime.length})</h4>${pendingOvertime.length === 0 ? '<div class="text-center py-4 text-gray-400 text-xs">لا يوجد</div>' : pendingOvertime.map(o => `<div class="bg-white border border-indigo-100 rounded-xl p-3 mb-2 shadow-xs"><div class="flex justify-between items-start mb-2"><div><h4 class="font-bold text-sm text-gray-800">${o.employeeName}</h4><p class="text-[11px] text-gray-500">التاريخ: ${formatDate(o.date)}</p></div><span class="text-[10px] bg-indigo-50 text-indigo-600 px-2 py-1 rounded-full font-bold">${o.hours} ساعات</span></div><div class="flex gap-2 pt-2 border-t mt-2"><button onclick="handleOvertime('${o.id}', 'Approved', '${o.employeeId}')" class="flex-1 bg-green-500 text-white py-1.5 rounded-lg text-xs font-bold hover:bg-green-600">اعتماد</button><button onclick="handleOvertime('${o.id}', 'Rejected', '${o.employeeId}')" class="flex-1 bg-red-100 text-red-600 py-1.5 rounded-lg text-xs font-bold hover:bg-red-200">رفض</button></div></div>`).join('')}</div><div><h4 class="font-bold mb-2 text-xs text-gray-400 uppercase">سابقة</h4><div class="space-y-1">${processed.map(l => `<div class="flex justify-between items-center p-2 bg-gray-50 rounded-lg text-xs"><span class="text-gray-700">${l.employeeName} <span class="text-gray-400">(${l.type})</span></span><span class="font-bold ${l.status === 'Approved' ? 'text-green-500' : 'text-red-400'}">${l.status === 'Approved' ? 'مقبول' : 'مرفوض'}</span></div>`).join('')}</div></div></div>`; }
+                if (currentPage === 'leaves') { const pending = leaves.filter(l => l.status === 'Pending'); const processed = leaves.filter(l => l.status !== 'Pending').sort((a,b) => b.date - a.date); const pendingOvertime = overtimeLogs.filter(o => o.status === 'Pending'); $('page-leaves').innerHTML = `<div class="card p-5"><h3 class="font-bold text-lg text-gray-800 mb-4">طلبات الإجازات</h3><div class="mb-6"><h4 class="font-bold mb-2 text-xs text-orange-600 flex items-center gap-1"><span class="w-1.5 h-1.5 bg-orange-500 rounded-full animate-pulse"></span>معلقة (${pending.length})</h4>${pending.length === 0 ? '<div class="text-center py-6 text-gray-400 text-xs">لا يوجد طلبات معلقة</div>' : pending.map(l => { const dur = calcDur(l.startDate, l.endDate); const bal = employeesData[l.employeeId] || {}; return `<div class="bg-white border border-gray-200 rounded-xl p-3 mb-2 shadow-xs"><div class="flex justify-between items-start mb-2"><div><h4 class="font-bold text-sm text-gray-800">${l.employeeName}</h4><p class="text-[11px] text-gray-500">${l.type} (${dur.days} أيام)</p></div><span class="text-[10px] bg-blue-50 text-blue-600 px-2 py-1 rounded-full font-medium">متبقي: ${bal.remainingBalance || 0}ي</span></div>${l.imageUrl ? `<div class="my-2 rounded overflow-hidden"><img src="${l.imageUrl}" onclick="viewImage('${l.imageUrl}')" class="w-full h-32 object-cover cursor-pointer hover:opacity-90 transition" alt="Image"></div>` : ''}<div class="flex gap-2 pt-2 border-t mt-2"><button onclick="handleLeave('${l.id}', 'Approved', ${dur.totalHours}, '${l.type}', '${l.employeeId}')" class="flex-1 bg-green-500 text-white py-1.5 rounded-lg text-xs font-bold hover:bg-green-600">قبول</button><button onclick="handleLeave('${l.id}', 'Rejected', 0, 'None', '${l.employeeId}')" class="flex-1 bg-red-100 text-red-600 py-1.5 rounded-lg text-xs font-bold hover:bg-red-200">رفض</button></div></div>`; }).join('')}</div><div class="mb-6 border-t pt-4"><h4 class="font-bold mb-2 text-xs text-indigo-600 flex items-center gap-1"><span class="w-1.5 h-1.5 bg-indigo-500 rounded-full animate-pulse"></span>طلات وقت إضافي (${pendingOvertime.length})</h4>${pendingOvertime.length === 0 ? '<div class="text-center py-4 text-gray-400 text-xs">لا يوجد</div>' : pendingOvertime.map(o => `<div class="bg-white border border-indigo-100 rounded-xl p-3 mb-2 shadow-xs"><div class="flex justify-between items-start mb-2"><div><h4 class="font-bold text-sm text-gray-800">${o.employeeName}</h4><p class="text-[11px] text-gray-500">التاريخ: ${formatDate(o.date)}</p></div><span class="text-[10px] bg-indigo-50 text-indigo-600 px-2 py-1 rounded-full font-bold">${o.hours} ساعات</span></div><div class="flex gap-2 pt-2 border-t mt-2"><button onclick="handleOvertime('${o.id}', 'Approved', '${o.employeeId}')" class="flex-1 bg-green-500 text-white py-1.5 rounded-lg text-xs font-bold hover:bg-green-600">اعتماد</button><button onclick="handleOvertime('${o.id}', 'Rejected', '${o.employeeId}')" class="flex-1 bg-red-100 text-red-600 py-1.5 rounded-lg text-xs font-bold hover:bg-red-200">رفض</button></div></div>`).join('')}</div><div><h4 class="font-bold mb-2 text-xs text-gray-400 uppercase">سابقة</h4><div class="space-y-1">${processed.map(l => `<div class="flex justify-between items-center p-2 bg-gray-50 rounded-lg text-xs"><span class="text-gray-700">${l.employeeName} <span class="text-gray-400">(${l.type})</span></span><span class="font-bold ${l.status === 'Approved' ? 'text-green-500' : 'text-red-400'}">${l.status === 'Approved' ? 'مقبول' : 'مرفوض'}</span></div>`).join('')}</div></div></div>`; }
 
-                // --- REPORTS PAGE (Logic to deduct employee from workforce until return date) ---
+                // --- REPORTS PAGE ---
                 if (currentPage === 'mgr-reports') {
                     const totalEmps = USERS_CONFIG.filter(u => u.role === 'employee').length; 
-                    const now = new Date(); now.setHours(0,0,0,0); // Reset time for accurate date comparison
+                    const now = new Date(); now.setHours(0,0,0,0); 
                     const year = now.getFullYear(); const month = now.getMonth(); const daysInMonth = new Date(year, month + 1, 0).getDate(); const requiredStaff = 5; 
                     const rowsHtml = []; const shortageDays = [];
 
@@ -284,18 +390,13 @@
                         const dateStr = date.toISOString().split('T')[0]; 
                         const dayName = date.toLocaleDateString('ar-EG', { weekday: 'short' }); 
                         const isToday = date.toDateString() === now.toDateString(); 
-                        const isPast = date < now; // Past days (excluding today)
+                        const isPast = date < now; 
 
-                        // --- UPDATED LOGIC: Deduct until Return Date ---
-                        // An employee is considered absent if:
-                        // 1. Leave is Approved
-                        // 2. The current 'date' is >= Start Date
-                        // 3. The current 'date' is <= End Date + 1 day (Return Date)
                         const absentApproved = leaves.filter(l => {
                             if(l.status !== 'Approved') return false;
                             const start = new Date(l.startDate); start.setHours(0,0,0,0);
                             const end = new Date(l.endDate); end.setHours(0,0,0,0);
-                            const returnDate = new Date(end); returnDate.setDate(returnDate.getDate() + 1); returnDate.setHours(0,0,0,0); // Return is next day
+                            const returnDate = new Date(end); returnDate.setDate(returnDate.getDate() + 1); returnDate.setHours(0,0,0,0);
                             return date >= start && date <= returnDate;
                         });
                         
@@ -305,7 +406,6 @@
                         const totalWorkforce = actualInternal + externalCount; 
                         const deficit = requiredStaff - totalWorkforce;
 
-                        // Styles
                         let rowBg = isPast ? 'opacity-50' : ''; 
                         let statusBadge = `<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-green-100 text-green-700">مكتمل</span>`;
                         if (deficit > 0) { statusBadge = `<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-red-100 text-red-700">عجز ${deficit}</span>`; shortageDays.push({ date, dayName, dateStr, deficit, actualInternal, externalCount, totalWorkforce, requiredStaff }); }
@@ -378,8 +478,61 @@
                 window.openExternalModal = (dateStr) => { const date = new Date(dateStr); const externalCount = externalWorkers[dateStr] || 0; $('modal-content').innerHTML = `<div class="border-b border-gray-200 pb-3 mb-3 flex justify-between items-center"><h3 class="font-bold text-lg text-gray-800">تعديل القوى العاملة</h3><span onclick="closeModal()" class="text-gray-400 cursor-pointer hover:text-red-500 text-2xl leading-none">&times;</span></div><p class="text-sm text-gray-500 mb-4 bg-gray-50 p-2 rounded-lg">${formatDate(date)}</p><div class="mb-6 bg-purple-50 p-4 rounded-xl border border-purple-100 text-center"><label class="text-xs text-purple-700 block mb-2 font-bold">عدد العمالة الخارجية</label><input type="number" id="ext-input-quick" value="${externalCount}" class="w-full border-white bg-white p-3 text-center font-bold text-2xl" min="0" placeholder="0"></div><button onclick="saveExternalWorkersQuick('${dateStr}')" class="w-full bg-purple-600 text-white py-3 rounded-xl font-bold shadow-md">تأكيد</button>`; openModal(); };
                 window.saveExternalWorkersQuick = async (dateStr) => { const val = parseInt($('ext-input-quick').value) || 0; const ref = doc(db, `artifacts/${APP_ID}/public/data/external_workers`, dateStr); if(val > 0) { await setDoc(ref, { count: val, date: new Date(dateStr) }); } else { await deleteDoc(ref); } showToast("تم الحفظ"); closeModal(); };
                 window.saveExternalWorkers = async (dateStr) => { const val = parseInt($('ext-workers-input').value) || 0; const ref = doc(db, `artifacts/${APP_ID}/public/data/external_workers`, dateStr); if(val > 0) { await setDoc(ref, { count: val, date: new Date(dateStr) }); } else { await deleteDoc(ref); } showToast("تم الحفظ"); closeModal(); };
-                window.openEditBalanceModal = (empId) => { const data = employeesData[empId] || {}; const user = USERS_CONFIG.find(u => u.id === empId); $('modal-content').innerHTML = `<div class="border-b pb-3 mb-3 flex justify-between items-center"><h3 class="font-bold text-lg">تعديل رصيد</h3><span onclick="closeModal()" class="text-gray-400 text-2xl">&times;</span></div><p class="text-sm mb-4 bg-gray-50 p-2 rounded">${user.displayName}</p><div class="grid grid-cols-2 gap-4 mb-6"><div><label class="text-xs block mb-1">أيام</label><input type="number" id="edit-days" value="${data.balanceDays || 0}" class="w-full border p-3 text-center font-bold text-lg"></div><div><label class="text-xs block mb-1">ساعات</label><input type="number" id="edit-hours" value="${data.balanceHours || 0}" max="7" class="w-full border p-3 text-center font-bold text-lg"></div></div><button onclick="saveBalance('${empId}')" class="w-full btn-primary py-2 rounded-xl font-bold">حفظ</button>`; openModal(); };
-                window.saveBalance = async (empId) => { const days = parseInt($('edit-days').value) || 0; const hours = parseInt($('edit-hours').value) || 0; const user = USERS_CONFIG.find(u => u.id === empId); await setDoc(doc(db, `artifacts/${APP_ID}/public/data/employees`, empId), { balanceDays: days, balanceHours: hours }, { merge: true }); await logTx(empId, user.displayName, 'adjustment', { days, hours }, 'تعديل يدوي'); showToast("تم الحفظ"); closeModal(); };
+                
+                // --- Balance Modal with Warning Logic ---
+                window.openEditBalanceModal = (empId) => { 
+                    const data = employeesData[empId] || { totalBalance: 0, usedBalance: 0, remainingBalance: 0 }; 
+                    const user = USERS_CONFIG.find(u => u.id === empId); 
+                    $('modal-content').innerHTML = `
+                        <div class="border-b pb-3 mb-3 flex justify-between items-center">
+                            <h3 class="font-bold text-lg">إدارة الرصيد</h3>
+                            <span onclick="closeModal()" class="text-gray-400 text-2xl">&times;</span>
+                        </div>
+                        <p class="text-sm mb-4 bg-gray-50 p-2 rounded">${user.displayName}</p>
+                        <div class="space-y-4">
+                            <div class="bg-green-50 p-3 rounded-xl border border-green-100">
+                                <label class="text-xs text-green-700 block mb-1 font-bold">إجمالي الرصيد المستحق</label>
+                                <input type="number" id="edit-total" value="${data.totalBalance || 0}" class="w-full border-white bg-white p-3 text-center font-bold text-lg" min="0">
+                            </div>
+                            <div class="bg-gray-100 p-3 rounded-xl border border-gray-200">
+                                <label class="text-xs text-gray-500 block mb-1">مستهلك</label>
+                                <input type="number" value="${data.usedBalance || 0}" class="w-full border-white bg-gray-200 p-3 text-center font-bold text-lg text-gray-500" disabled>
+                            </div>
+                            <div class="bg-teal-50 p-3 rounded-xl border border-teal-100">
+                                <label class="text-xs text-teal-700 block mb-1 font-bold">المتبقي</label>
+                                <input type="number" value="${data.remainingBalance || 0}" class="w-full border-white bg-teal-100 p-3 text-center font-bold text-lg text-teal-600" disabled>
+                            </div>
+                            <button onclick="saveBalance('${empId}')" class="w-full btn-primary py-2 rounded-xl font-bold">حفظ التعديلات</button>
+                        </div>
+                    `; 
+                    openModal(); 
+                };
+                
+                window.saveBalance = async (empId) => { 
+                    const newTotal = parseInt($('edit-total').value) || 0; 
+                    const currentData = employeesData[empId] || {};
+                    const used = currentData.usedBalance || 0;
+                    const newRemaining = newTotal - used;
+                    
+                    const user = USERS_CONFIG.find(u => u.id === empId); 
+                    await setDoc(doc(db, `artifacts/${APP_ID}/public/data/employees`, empId), { 
+                        totalBalance: newTotal, 
+                        usedBalance: used, 
+                        remainingBalance: newRemaining 
+                    }, { merge: true }); 
+                    
+                    const msgBody = `تم تحديث رصيدك. إجمالي: ${newTotal} يوم، ومتبقي: ${newRemaining} يوم.`;
+                    await createNotification(empId, 'تحديث الرصيد', msgBody, 'emp-balance');
+                    
+                    if (newTotal >= MAX_LEAVE_BALANCE) {
+                        showToast(`تنبيه: إجمالي رصيد الموظف وصل للحد الأقصى (${MAX_LEAVE_BALANCE} يوم)!`, 'warning');
+                    } else {
+                        showToast("تم حفظ التعديلات");
+                    }
+
+                    await logTx(empId, user.displayName, 'adjustment', { days: newTotal }, 'تعديل الرصيد المستحق'); 
+                    closeModal(); 
+                };
             }
         }
         
@@ -388,29 +541,31 @@
         window.applyHistoryFilter = (val) => { currentHistoryFilter = val; updateContent(); };
         window.completeTask = async (id) => { const ref = doc(db, `artifacts/${APP_ID}/public/data/tasks`, id); const snap = await getDoc(ref); const data = snap.data(); if (data.assigneeId === 'all') { const completed = data.completedBy || []; if (!completed.some(c => c.id === currentUser.id)) { await updateDoc(ref, { completedBy: [...completed, { id: currentUser.id, name: currentUser.displayName }] }); } } else { await updateDoc(ref, { completed: true }); } showToast("تم إنجاز المهمة"); };
         
-        // --- FIXED: LEAVE HANDLER ---
+        // --- Leave Handler ---
         window.handleLeave = async (id, status, totalHours, leaveType, empId) => { 
             const ref = doc(db, `artifacts/${APP_ID}/public/data/leaves`, id); 
             const snap = await getDoc(ref); 
             const data = snap.data(); 
             
             if (status === 'Approved') { 
-                // Deduct from BALANCE (Days) only if NOT Sick
                 if (leaveType !== 'مرضية') { 
-                    const empData = employeesData[empId] || {}; 
-                    let currentTotal = ((empData.balanceDays || 0) * 8) + (empData.balanceHours || 0); 
-                    let newTotal = Math.max(0, currentTotal - totalHours); 
-                    const newDays = Math.floor(newTotal / 8); 
-                    const newHours = newTotal % 8; 
-                    await setDoc(doc(db, `artifacts/${APP_ID}/public/data/employees`, empId), { balanceDays: newDays, balanceHours: newHours }, { merge: true }); 
-                    const dur = calcDur(data.startDate, data.endDate); 
-                    await logTx(empId, data.employeeName, 'deduction', { days: dur.days, hours: 0 }, `إجازة ${data.type}`); 
+                    const empData = employeesData[empId] || { totalBalance: 0, usedBalance: 0, remainingBalance: 0 }; 
+                    
+                    const daysToDeduct = calcDur(data.startDate, data.endDate).days;
+                    
+                    const newUsed = (empData.usedBalance || 0) + daysToDeduct;
+                    const newRemaining = empData.totalBalance - newUsed;
+                    
+                    await setDoc(doc(db, `artifacts/${APP_ID}/public/data/employees`, empId), { 
+                        usedBalance: newUsed, 
+                        remainingBalance: newRemaining 
+                    }, { merge: true }); 
+                    
+                    await logTx(empId, data.employeeName, 'deduction', { days: daysToDeduct, hours: 0 }, `إجازة ${data.type}`); 
                 } else {
                     const dur = calcDur(data.startDate, data.endDate); 
-                    await logTx(empId, data.employeeName, 'info', { days: dur.days, hours: 0 }, `إجازة مرضية (بدون خصم رصيد)`); 
+                    await logTx(empId, data.employeeName, 'info', { days: dur.days, hours: 0 }, `إجازة مرضية (بدون خصم)`); 
                 }
-                // Note: Deduction from Workforce table happens automatically in updateContent()
-                // because we filter leaves by status === 'Approved' and check date ranges.
             } 
             
             const msg = status === 'Approved' ? 'تم قبول طلب إجازتك' : 'تم رفض طلب إجازتك'; 
@@ -440,12 +595,16 @@
         window.logoutUser = async () => { 
             await signOut(auth); 
             localStorage.removeItem('egybev_user'); 
+            localStorage.removeItem('lastPage'); 
+            // Reset UI
+            currentUser = null; 
             hide('main-header'); 
             hide('dashboard-container'); 
-            show('login-section'); 
             hide('fab-btn'); 
             hide('sidebar-panel'); 
             hide('sidebar-backdrop'); 
+            show('login-section'); 
+            document.body.classList.add('login-bg');
         };
         
         $('login-form').addEventListener('submit', (e) => { 
@@ -463,26 +622,45 @@
         
         // --- Init App ---
         async function initApp() { 
+            // 1. Check Local Storage First for UI state
             const storedUser = localStorage.getItem('egybev_user'); 
-            if (!storedUser) return; 
-            currentUser = JSON.parse(storedUser); 
-            onAuthStateChanged(auth, async (user) => { 
-                if (user) { 
-                    fbUser = user; 
-                    await syncUsers(); 
-                    setupListeners(); 
-                    hide('login-section'); 
-                    show('dashboard-container'); 
-                    show('main-header'); 
-                    renderSidebar(); 
-                    if (currentUser.role === 'manager') navigateTo('tasks'); 
-                    else navigateTo('emp-balance'); 
-                } 
-                else { 
-                    try { await signInAnonymously(auth); } 
-                    catch(e) { console.error(e); } 
-                } 
-            }); 
+            
+            if (storedUser) {
+                currentUser = JSON.parse(storedUser);
+                
+                // 2. Initialize Firebase Auth
+                onAuthStateChanged(auth, async (user) => { 
+                    if (user) { 
+                        fbUser = user; 
+                        await syncUsers(); 
+                        setupListeners(); 
+                        
+                        // 3. Show Dashboard
+                        hide('login-section'); 
+                        show('dashboard-container'); 
+                        show('main-header'); 
+                        document.body.classList.remove('login-bg');
+                        
+                        // 4. Restore Last Page or Default
+                        const lastPage = localStorage.getItem('lastPage'); 
+                        if (lastPage) {
+                            navigateTo(lastPage); 
+                        } else {
+                            if (currentUser.role === 'manager') navigateTo('tasks'); 
+                            else navigateTo('emp-balance'); 
+                        }
+                    } 
+                    else { 
+                        try { await signInAnonymously(auth); } 
+                        catch(e) { console.error(e); } 
+                    } 
+                }); 
+            } else {
+                // No user found, ensure login screen is visible
+                show('login-section');
+                hide('dashboard-container');
+                hide('main-header');
+            }
         }
         
         function setupListeners() { 
