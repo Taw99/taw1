@@ -7,7 +7,6 @@
     <title>EgyBev</title>
     
     <!-- Manifest & Icons -->
-    <!-- تأكد من وجود الصورة بجانب الملف بهذا الاسم -->
     <link rel="icon" type="image/png" href="Gemini_Generated_Image_2b7z1w2b7z.png">
     <link rel="apple-touch-icon" href="Gemini_Generated_Image_2b7z1w2b7z.png">
     <link rel="manifest" href="data:application/json;base64,eyJuYW1lIjoiRWd5QmV2IEhSIiwic2hvcnRfbmFtZSI6IkVneUJldiIsInN0YXJ0X3VybCI6Ii4iLCJkaXNwbGF5Ijoic3RhbmRhbG9uZSIsImJhY2tncm91bmRfY29sb3IiOiIjZjFmNWY5IiwidGhlbWVfY29sb3IiOiIjMGY3NjZlIiwiaWNvbnMiOlt7InNyYyI6IkdlbWluaV9HZW5lcmF0ZWRfSW1hZ2VfMmJ3ejF3MmI3ei5wbmciLCJzaXplcyI6IjE5MngxOTIiLCJ0eXBlIjoiaW1hZ2UvcG5nIiwicHVycG9zZSI6ImFueSBtYXNrYWJsZSJ9XX0=">
@@ -74,9 +73,9 @@
 
         /* Report Cards */
         .day-row { display: flex; align-items: stretch; gap: 0.5rem; margin-bottom: 0.5rem; }
-        .day-card { flex: 1; background: white; border-radius: 1rem; padding: 0.75rem; border: 1px solid #e2e8f0; display: flex; align-items: center; justify-content: space-between; cursor: pointer; transition: all 0.2s; }
+        .day-card { flex: 1; background: white; border-radius: 1rem; padding: 0.75rem; border: 1px solid #e2e8f0; display: flex; items: center; justify-content: space-between; cursor: pointer; transition: all 0.2s; }
         .day-card:hover { border-color: #14b8a6; box-shadow: 0 2px 8px rgba(0,0,0,0.05); transform: translateY(-1px); }
-        .workforce-card { width: 140px; flex-shrink: 0; background: white; border-radius: 1rem; padding: 0.5rem; border: 1px solid #e2e8f0; display: flex; flex-direction: column; justify-content: center; align-items: center; text-center; position: relative; }
+        .workforce-card { width: 140px; flex-shrink: 0; background: white; border-radius: 1rem; padding: 0.5rem; border: 1px solid #e2e8f0; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; position: relative; }
         .edit-wf-btn { position: absolute; top: 4px; left: 4px; padding: 2px; background: white; border-radius: 6px; border: 1px solid #e2e8f0; color: #6b7280; cursor: pointer; transition: all 0.2s; }
         .edit-wf-btn:hover { background: #f1f5f9; color: #0f172a; }
 
@@ -95,6 +94,58 @@
             height: 100%;
             background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
             pointer-events: none;
+        }
+        
+        /* Eval Page Specific (KPI Grid) */
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: 1fr 60px 70px;
+            gap: 0.5rem;
+            align-items: center;
+        }
+        .kpi-header {
+            background-color: #f1f5f9;
+            font-weight: 600;
+            font-size: 0.7rem;
+            color: #475569;
+            padding: 0.5rem;
+            border-radius: 0.5rem;
+            text-align: center;
+        }
+        .kpi-row {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #f1f5f9;
+            font-size: 0.8rem;
+        }
+        .kpi-input {
+            border: 1px solid #e2e8f0 !important;
+            border-radius: 0.5rem !important;
+            padding: 0.25rem;
+            text-align: center;
+            font-size: 0.75rem !important;
+            width: 100%;
+            background: white !important;
+        }
+        .kpi-cat-header {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: #0f766e;
+            margin-top: 1rem;
+            margin-bottom: 0.5rem;
+            padding-bottom: 0.25rem;
+            border-bottom: 2px solid #ccfbf1;
+            display: flex;
+            justify-content: space-between;
+        }
+        .kpi-subtotal {
+            margin-top: 0.5rem;
+            padding-top: 0.5rem;
+            border-top: 1px dashed #cbd5e1;
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: #475569;
         }
         
         /* Login Page Specific */
@@ -117,8 +168,7 @@
                 <div class="relative z-10">
                     <div class="flex justify-between items-start mb-4">
                         <div class="bg-white/20 p-2 rounded-xl backdrop-blur">
-                             <!-- App Icon in Sidebar -->
-                            <img src="Gemini_Generated_Image_2b7z1w2b7z.png" class="w-8 h-8 object-contain" alt="App Icon">
+                             <img src="Gemini_Generated_Image_2b7z1w2b7z.png" class="w-8 h-8 object-contain" alt="App Icon">
                         </div>
                         <button onclick="toggleSidebar()" class="hover:bg-white/20 p-1 rounded-full transition"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg></button>
                     </div>
@@ -157,8 +207,7 @@
                     </div>
                     <div class="flex items-center gap-2">
                         <div class="w-9 h-9 bg-gradient-to-br from-teal-600 to-teal-700 rounded-xl flex items-center justify-center shadow-sm">
-                             <!-- App Icon in Header -->
-                            <img src="Gemini_Generated_Image_2b7z1w2b7z.png" class="w-5 h-5 object-contain" alt="Logo">
+                             <img src="Gemini_Generated_Image_2b7z1w2b7z.png" class="w-5 h-5 object-contain" alt="Logo">
                         </div>
                         <h1 class="text-lg font-bold text-gray-800">EgyBev</h1>
                     </div>
@@ -173,9 +222,8 @@
                     <div class="text-center mb-10">
                         <div class="w-32 h-32 mx-auto mb-6 relative">
                            <div class="absolute inset-0 bg-teal-200 rounded-full animate-pulse opacity-50"></div>
-                           <div class="absolute inset-0 bg-teal-100 rounded-full animate-pulse opacity-75" style="animation-delay: 0.2s"></div>
+                           <div class="absolute inset-0 bg-teal-100 rounded-full animate-pulse opacity:75" style="animation-delay: 0.2s"></div>
                            <div class="relative w-32 h-32 bg-white rounded-full flex items-center justify-center shadow-2xl border-4 border-white">
-                                <!-- App Icon Large -->
                                 <img src="Gemini_Generated_Image_2b7z1w2b7z.png" class="w-20 h-20 object-contain" alt="App Icon">
                            </div>
                         </div>
@@ -207,6 +255,7 @@
                 <div id="page-mgr-logs" class="page hidden"></div>
                 <div id="page-mgr-reports" class="page hidden"></div>
                 <div id="page-mgr-analytics" class="page hidden"></div>
+                <div id="page-daily-eval" class="page hidden"></div>
             </section>
         </main>
         
@@ -229,7 +278,7 @@
         const firebaseConfig = { apiKey: "AIzaSyC26fXDiuJM1FpMkz0xi_Beb0L7nF7Wj7Y", authDomain: "egy-v-1376c.firebaseapp.com", projectId: "egy-v-1376c", storageBucket: "egy-v-1376c.appspot.com", messagingSenderId: "963221682469", appId: "1:963221682469:web:f512e3acac4ef8c71742cc" };
         const APP_ID = firebaseConfig.projectId;
 
-        // --- Users Setup (Demo Data) ---
+        // --- Users setup (Demo Data) ---
         const USERS_CONFIG = [];
         for(let i=1; i<=3; i++) USERS_CONFIG.push({ id: `mgr_0${i}`, username: `مدير${i}`, password: '123', role: 'manager', displayName: `المدير ${i}` });
         for(let i=1; i<=12; i++) USERS_CONFIG.push({ id: `emp_${String(i).padStart(2,'0')}`, username: `موظف${i}`, password: '123', role: 'employee', displayName: `الموظف ${i}` });
@@ -245,13 +294,59 @@
         let tasks = [], leaves = [], employeesData = {}, balanceLogs = [], overtimeLogs = [], notifications = []; 
         let externalWorkers = {}; 
         let currentPage = ''; 
+        let previousPage = ''; 
         let compressedImageData = null; 
         let currentHistoryFilter = 'all';
         let dailyEvaluations = []; 
         let analyticsFilter = 'month'; 
+        let activeEvalEmpId = null; 
+        let currentQuarter = 'Q1'; 
 
         // --- Constants ---
         const MAX_LEAVE_BALANCE = 60;
+
+        // --- KPI Configuration (UPDATED) ---
+        // Items represent the direct value to be entered (e.g., 6 points).
+        // maxWeight represents the Total Sum of items (40).
+        const KPI_STRUCTURE = {
+            dept: {
+                maxWeight: 40, 
+                items: [
+                    // Sum = 6+5+6+6+6+5+6 = 40
+                    { id: 'd1', name: 'مشاهدات السلامة (safety)', weight: 6 },
+                    { id: 'd2', name: 'عدد ايام العمل بدون حوادث', weight: 5 },
+                    { id: 'd3', name: 'الإلتزام بممارسات التصنيع الجيد', weight: 6 },
+                    { id: 'd4', name: 'إستهلاك المواد الخام', weight: 6 },
+                    { id: 'd5', name: 'إستهلاك المرافق', weight: 6 },
+                    { id: 'd6', name: 'مؤشر جودة الانتاج', weight: 5 },
+                    { id: 'd7', name: 'خطة الانتاج', weight: 6 },
+                ]
+            },
+            spec: {
+                maxWeight: 40, 
+                items: [
+                    // Sum = 40
+                    { id: 's1', name: 'جودة التقارير', weight: 6 },
+                    { id: 's2', name: 'متابعة الأعطال', weight: 6 },
+                    { id: 's3', name: 'جودة الكحول المنتج', weight: 6 },
+                    { id: 's4', name: 'مؤشر الأداء التشغيلي', weight: 6 },
+                    { id: 's5', name: 'مشروع برج التقطير الجديد', weight: 6 },
+                    { id: 's6', name: 'تنفيذ مشروع جديد', weight: 5 },
+                    { id: 's7', name: 'عمليات التحضير', weight: 5 },
+                ]
+            },
+            behav: {
+                maxWeight: 20,
+                items: [
+                    // Sum = 20
+                    { id: 'b1', name: 'العمل مع الاخرين', weight: 4 },
+                    { id: 'b2', name: 'التكيف والاستجابة للتغيير', weight: 4 },
+                    { id: 'b3', name: 'التعاون مع الاقسام الاخرى', weight: 4 },
+                    { id: 'b4', name: 'الإلتزام بخطة التدريب وتطبيقها عملياً', weight: 4 },
+                    { id: 'b5', name: 'حل المشكلات', weight: 4 }
+                ]
+            }
+        };
 
         // --- Helper Functions ---
         const $ = id => document.getElementById(id);
@@ -300,6 +395,7 @@
         
         // --- Navigation Logic ---
         function navigateTo(pageId) { 
+            if (currentPage) previousPage = currentPage;
             currentPage = pageId; 
             localStorage.setItem('lastPage', pageId); 
             
@@ -311,6 +407,11 @@
             else if (currentUser.role === 'manager' && pageId === 'tasks') { fab.classList.remove('hidden'); fab.onclick = () => openTaskModal(); } 
             else { fab.classList.add('hidden'); } 
             updateContent(); 
+        }
+        
+        function goBack() {
+            if (previousPage) navigateTo(previousPage);
+            else { if (currentUser.role === 'manager') navigateTo('mgr-analytics'); else navigateTo('emp-balance'); }
         }
         
         async function syncUsers() { if (!fbUser) return; USERS_CONFIG.filter(u => u.role === 'employee').forEach(async (u) => { const ref = doc(db, `artifacts/${APP_ID}/public/data/employees`, u.id); if (!(await getDoc(ref)).exists()) await setDoc(ref, { totalBalance: 21, usedBalance: 0, remainingBalance: 21, displayName: u.displayName, metrics: {} }); }); }
@@ -467,19 +568,307 @@
                 if (currentPage === 'mgr-logs') { let filteredLogs = balanceLogs; if (currentHistoryFilter !== 'all') { filteredLogs = balanceLogs.filter(l => l.employeeId === currentHistoryFilter); } filteredLogs.sort((a,b) => b.date?.seconds - a.date?.seconds); $('page-mgr-logs').innerHTML = `<div class="card overflow-hidden"><div class="p-4 border-b bg-gray-50 flex justify-between items-center"><h3 class="font-bold text-gray-800">سجل الحركات</h3><div class="flex gap-2"><button onclick="exportLogsToExcel()" class="flex items-center gap-1 bg-blue-600 text-white px-3 py-1.5 rounded-lg text-xs font-bold shadow-sm hover:bg-blue-700 transition">تصدير الأرصدة</button><button onclick="exportToExcel()" class="flex items-center gap-1 bg-green-600 text-white px-3 py-1.5 rounded-lg text-xs font-bold shadow-sm hover:bg-green-700 transition">تصدير الإجازات</button></div></div><div class="p-3 bg-gray-100 border-b"><select id="log-filter-select" class="w-full border rounded-lg p-2 bg-white text-sm outline-none" onchange="applyHistoryFilter(this.value)"><option value="all" ${currentHistoryFilter === 'all' ? 'selected' : ''}>عرض الكل</option>${USERS_CONFIG.filter(u=>u.role==='employee').map(u => `<option value="${u.id}" ${currentHistoryFilter === u.id ? 'selected' : ''}>${u.displayName}</option>`).join('')}</select></div><div class="divide-y text-xs max-h-[50vh] overflow-y-auto">${filteredLogs.length === 0 ? '<div class="p-6 text-center text-gray-400">لا توجد حركات</div>' : filteredLogs.map(log => `<div class="flex justify-between items-start p-2 hover:bg-gray-50 transition group"><div class="flex-1"><div class="flex items-center gap-2 mb-0.5"><span class="font-bold ${log.type === 'adjustment' ? 'text-green-600' : 'text-red-500'}">${log.type === 'adjustment' ? '+' : '-'} ${log.value.days}ي</span></div><p class="text-gray-600 text-[11px]"><span class="font-medium">${log.employeeName}</span> - <span class="text-gray-400">${log.notes}</span></p></div><div class="flex items-center gap-2"><span class="text-[10px] text-gray-300 font-medium">${formatDate(log.date)}</span><button onclick="deleteSingleLog('${log.id}')" class="opacity-0 group-hover:opacity-100 text-red-400 hover:text-red-600 p-1 rounded transition"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg></button></div></div>`).join('')}</div></div>`; }
 
                 // --- ANALYTICS PAGE ---
-                if (currentPage === 'mgr-analytics') { const stats = calculatePerformanceStats(); $('page-mgr-analytics').innerHTML = `<div class="card p-4 mb-4"><div class="flex flex-wrap justify-between items-center mb-4 gap-2"><div><h3 class="font-bold text-lg text-gray-800">تقييم الأداء التراكمي</h3><p class="text-xs text-gray-500">يعتمد على التقييم اليومي للموظفين</p></div><div class="flex gap-2 items-center"><select id="analytics-filter" onchange="changeAnalyticsFilter(this.value)" class="bg-white text-xs p-2 border rounded-lg"><option value="month" ${analyticsFilter === 'month' ? 'selected' : ''}>الشهر الحالي</option><option value="3months" ${analyticsFilter === '3months' ? 'selected' : ''}>آخر 3 أشهر</option><option value="6months" ${analyticsFilter === '6months' ? 'selected' : ''}>آخر 6 أشهر</option><option value="year" ${analyticsFilter === 'year' ? 'selected' : ''}>آخر سنة</option></select><button onclick="exportPerformance()" class="bg-green-600 text-white px-3 py-1.5 rounded-lg text-xs font-bold">Excel</button></div></div><div class="overflow-x-auto"><table class="w-full text-xs"><thead class="bg-gray-50 text-gray-500 border-b"><tr><th class="p-2 text-right font-semibold sticky right-0 bg-white">الموظف</th><th class="p-2 text-center font-semibold text-blue-600">النتيجة</th><th class="p-2 text-center font-semibold">أيام التقييم</th><th class="p-2 text-center font-semibold text-red-500">برادفورد</th><th class="p-2 text-center font-semibold">غياب</th><th class="p-2 text-center font-semibold">تقييم يومي</th></tr></thead><tbody class="divide-y">${stats.map(d => { let scoreColor = 'bg-red-500'; if (d.finalPercentage >= 80) scoreColor = 'bg-green-500'; else if (d.finalPercentage >= 60) scoreColor = 'bg-amber-500'; return `<tr class="hover:bg-gray-50"><td class="p-2 font-bold text-gray-800 sticky right-0 bg-white">${d.displayName}</td><td class="p-2 text-center"><div class="score-circle ${scoreColor}">${d.finalPercentage}%</div></td><td class="p-2 text-center text-gray-600">${d.evalDays} يوم</td><td class="p-2 text-center font-bold ${d.bradfordFactor > 50 ? 'text-red-600' : 'text-gray-400'}">${d.bradfordFactor}</td><td class="p-2 text-center">${d.totalDays} يوم</td><td class="p-2 text-center"><button onclick="openDailyEvalModal('${d.id}')" class="bg-teal-500 text-white px-2 py-1 rounded text-[10px] font-bold">تقييم اليوم</button></td></tr>`; }).join('')}</tbody></table></div></div><div class="card p-4"><h3 class="font-bold text-md text-gray-700 mb-3">سجل التقييمات اليومية</h3><div class="space-y-2 max-h-60 overflow-y-auto">${dailyEvaluations.length === 0 ? '<p class="text-center text-gray-400 text-xs py-4">لا توجد تقييمات مسجلة بعد.</p>' : dailyEvaluations.slice(0, 20).map(ev => `<div class="flex justify-between items-center p-2 bg-gray-50 rounded-lg"><div class="flex items-center gap-2"><span class="text-[10px] bg-gray-200 px-2 py-0.5 rounded">${formatDate(ev.date)}</span><span class="font-bold text-xs">${ev.employeeName}</span></div><div class="flex gap-1 text-[10px] font-bold"><span class="text-purple-600">${ev.productivity}</span>+<span class="text-green-600">${ev.quality}</span>+<span class="text-indigo-600">${ev.efficiency}</span>+<span class="text-amber-600">${ev.taskCompletion}</span><span class="text-gray-400 mr-1">= ${ev.totalScore}</span></div></div>`).join('')}</div></div>`; }
+                if (currentPage === 'mgr-analytics') { 
+                    const stats = calculatePerformanceStats(); 
+                    $('page-mgr-analytics').innerHTML = `
+                        <div class="card p-4 mb-4">
+                            <div class="flex flex-wrap justify-between items-center mb-4 gap-2">
+                                <div><h3 class="font-bold text-lg text-gray-800">تقييم الأداء الشهري</h3><p class="text-xs text-gray-500">يعتمد على نظام KPI</p></div>
+                                <div class="flex gap-2 items-center">
+                                    <select id="analytics-filter" onchange="changeAnalyticsFilter(this.value)" class="bg-white text-xs p-2 border rounded-lg">
+                                        <option value="month" ${analyticsFilter === 'month' ? 'selected' : ''}>الشهر الحالي</option>
+                                        <option value="3months" ${analyticsFilter === '3months' ? 'selected' : ''}>آخر 3 أشهر</option>
+                                        <option value="year" ${analyticsFilter === 'year' ? 'selected' : ''}>آخر سنة</option>
+                                    </select>
+                                    <button onclick="exportPerformance()" class="bg-green-600 text-white px-3 py-1.5 rounded-lg text-xs font-bold">Excel</button>
+                                </div>
+                            </div>
+                            <div class="overflow-x-auto">
+                                <table class="w-full text-xs">
+                                    <thead class="bg-gray-50 text-gray-500 border-b">
+                                        <tr>
+                                            <th class="p-2 text-right font-semibold sticky right-0 bg-white">الموظف</th>
+                                            <th class="p-2 text-center font-semibold text-blue-600">النتيجة</th>
+                                            <th class="p-2 text-center font-semibold">تقييم</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="divide-y">
+                                        ${stats.map(d => {
+                                            let scoreColor = 'bg-red-500'; 
+                                            if (d.finalPercentage >= 80) scoreColor = 'bg-green-500'; 
+                                            else if (d.finalPercentage >= 60) scoreColor = 'bg-amber-500'; 
+                                            return `
+                                                <tr class="hover:bg-gray-50">
+                                                    <td class="p-2 font-bold text-gray-800 sticky right-0 bg-white">${d.displayName}</td>
+                                                    <td class="p-2 text-center"><div class="score-circle ${scoreColor}">${d.finalPercentage}%</div></td>
+                                                    <td class="p-2 text-center">
+                                                        <button onclick="openDailyEvalPage('${d.id}')" class="bg-teal-500 text-white px-2 py-1 rounded text-[10px] font-bold">تقييم</button>
+                                                    </td>
+                                                </tr>
+                                            `; 
+                                        }).join('')}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="card p-4">
+                            <h3 class="font-bold text-md text-gray-700 mb-3">سجل التقييمات الأخيرة</h3>
+                            <div class="space-y-2 max-h-40 overflow-y-auto">
+                                ${dailyEvaluations.length === 0 ? '<p class="text-center text-gray-400 text-xs py-4">لا توجد تقييمات مسجلة بعد.</p>' : dailyEvaluations.slice(0, 10).map(ev => `
+                                    <div class="flex justify-between items-center p-2 bg-gray-50 rounded-lg">
+                                        <div class="flex items-center gap-2">
+                                            <span class="text-[10px] bg-gray-200 px-2 py-0.5 rounded">${formatDate(ev.date)}</span>
+                                            <span class="font-bold text-xs">${ev.employeeName}</span>
+                                        </div>
+                                        <div class="flex gap-1 text-[10px] font-bold">
+                                            <span class="text-gray-400 mr-1">= ${ev.totalScore}%</span>
+                                        </div>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+                    `; 
+                }
+
+                // --- DEDICATED EVAL PAGE (KPI GRID) ---
+                if (currentPage === 'daily-eval') {
+                    if (!activeEvalEmpId) { navigateTo('mgr-analytics'); return; }
+                    const user = USERS_CONFIG.find(u => u.id === activeEvalEmpId);
+                    const todayStr = new Date().toISOString().split('T')[0];
+
+                    // Generate Grid HTML with Subtotals
+                    // Added: max="${item.weight}" to restrict input
+                    const generateKpiSection = (categoryKey, sectionData) => {
+                        const rows = sectionData.items.map(item => `
+                            <div class="kpi-row kpi-grid">
+                                <div class="text-gray-700 font-medium">${item.name}</div>
+                                <div class="text-center text-gray-400 font-bold">${item.weight}</div>
+                                <input type="number" 
+                                    id="kpi-${item.id}" 
+                                    class="kpi-input" 
+                                    placeholder="0" 
+                                    min="0" 
+                                    max="${item.weight}"
+                                    data-weight="${item.weight}"
+                                    data-category="${categoryKey}"
+                                    onchange="updateTotalScore()">
+                            </div>
+                        `).join('');
+
+                        return `
+                            <div class="card p-4">
+                                <div class="kpi-cat-header">
+                                    <span>${sectionData.title}</span>
+                                    <span class="text-[11px] bg-teal-100 text-teal-700 px-2 py-0.5 rounded-full">المجموع: ${sectionData.maxWeight}</span>
+                                </div>
+                                <div class="space-y-0">
+                                    <div class="kpi-grid mb-2">
+                                        <div class="kpi-header">البند</div>
+                                        <div class="kpi-header">الوزن</div>
+                                        <div class="kpi-header">التحقيق</div>
+                                    </div>
+                                    ${rows}
+                                </div>
+                                <div class="kpi-subtotal">
+                                    <span>مجموع القسم</span>
+                                    <span id="subtotal-${categoryKey}">0</span>
+                                </div>
+                            </div>
+                        `;
+                    };
+
+                    $('page-daily-eval').innerHTML = `
+                        <div class="bg-white border-b sticky top-0 z-10 p-4 shadow-sm">
+                            <div class="flex items-center gap-3">
+                                <button onclick="goBack()" class="p-2 hover:bg-gray-100 rounded-full">
+                                    <svg class="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                                    </svg>
+                                </button>
+                                <div>
+                                    <h2 class="font-bold text-lg">${user.displayName}</h2>
+                                    <p class="text-xs text-gray-500">تقييم الأداء الشهري</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="p-4 space-y-4">
+                            <div class="card p-3 flex justify-between items-center">
+                                <div class="flex items-center gap-2">
+                                    <span class="text-gray-600 font-medium">التاريخ:</span>
+                                    <input type="date" id="eval-date" value="${todayStr}" class="p-1 text-left w-32 text-xs">
+                                </div>
+                                <select id="eval-quarter" class="p-1 text-xs border rounded w-24" onchange="currentQuarter = this.value">
+                                    <option value="Q1">الربع الأول</option>
+                                    <option value="Q2">الربع الثاني</option>
+                                    <option value="Q3">الربع الثالث</option>
+                                    <option value="Q4">الربع الرابع</option>
+                                </select>
+                            </div>
+
+                            <!-- Department KPI -->
+                            ${generateKpiSection('dept', {title: '1. Departmental KPIs', maxWeight: KPI_STRUCTURE.dept.maxWeight, items: KPI_STRUCTURE.dept.items})}
+
+                            <!-- Specific KPI -->
+                            ${generateKpiSection('spec', {title: '2.Specific KPIs', maxWeight: KPI_STRUCTURE.spec.maxWeight, items: KPI_STRUCTURE.spec.items})}
+
+                            <!-- Behavioral KPI -->
+                            ${generateKpiSection('behav', {title: '3.Behavioral KPIs', maxWeight: KPI_STRUCTURE.behav.maxWeight, items: KPI_STRUCTURE.behav.items})}
+
+                            <!-- Total Score Display -->
+                            <div class="bg-teal-50 border border-teal-100 rounded-2xl p-5 text-center">
+                                <p class="text-sm text-teal-700 font-bold mb-1">النتيجة النهائية (من 100)</p>
+                                <h1 id="kpi-total-score" class="text-5xl font-black text-teal-600">0%</h1>
+                            </div>
+
+                            <!-- Notes -->
+                            <div class="card p-4">
+                                <label class="text-xs text-gray-500 block mb-1">ملاحظات عامة</label>
+                                <textarea id="ev-notes" rows="2" class="w-full p-2 text-sm resize-none rounded-xl" placeholder="نقاط القوة / الضعف..."></textarea>
+                            </div>
+
+                            <!-- Save Button -->
+                            <button onclick="saveKpiEval()" class="w-full btn-primary py-4 rounded-2xl font-bold text-lg shadow-lg shadow-teal-500/20">
+                                حفظ التقييم
+                            </button>
+                        </div>
+                    `;
+                }
                 
                 // Logic Functions
-                window.calculatePerformanceStats = () => { const now = new Date(); let startDate = new Date(); if (analyticsFilter === 'month') startDate.setMonth(now.getMonth() - 1); else if (analyticsFilter === '3months') startDate.setMonth(now.getMonth() - 3); else if (analyticsFilter === '6months') startDate.setMonth(now.getMonth() - 6); else if (analyticsFilter === 'year') startDate.setFullYear(now.getFullYear() - 1); return USERS_CONFIG.filter(u => u.role === 'employee').map(u => { const empData = employeesData[u.id] || {}; const myLeaves = leaves.filter(l => l.employeeId === u.id && l.status === 'Approved'); let totalDays = 0; let spells = myLeaves.length; myLeaves.forEach(l => { totalDays += calcDur(l.startDate, l.endDate).days; }); const bradfordFactor = (spells * spells) * totalDays; const myEvls = dailyEvaluations.filter(e => { const eDate = e.date?.toDate ? e.date.toDate() : new Date(e.date); return e.employeeId === u.id && eDate >= startDate && eDate <= now; }); let totalScore = 0; myEvls.forEach(e => totalScore += (e.totalScore || 0)); let avgScore = myEvls.length > 0 ? totalScore / myEvls.length : 0; let absencePenalty = Math.min(10, Math.floor(totalDays / 5)); let bradfordPenalty = 0; if (bradfordFactor > 100) bradfordPenalty = 10; else if (bradfordFactor > 50) bradfordPenalty = 5; let finalScore = avgScore - absencePenalty - bradfordPenalty; finalScore = Math.max(0, finalScore); let finalPercentage = (finalScore / 40) * 100; return { ...u, totalDays, bradfordFactor, totalScore: finalScore.toFixed(1), finalPercentage: finalPercentage.toFixed(0), evalDays: myEvls.length }; }).sort((a,b) => b.finalPercentage - a.finalPercentage); };
+                window.calculatePerformanceStats = () => { 
+                    const now = new Date(); 
+                    let startDate = new Date(); 
+                    if (analyticsFilter === 'month') startDate.setMonth(now.getMonth() - 1); 
+                    else if (analyticsFilter === '3months') startDate.setMonth(now.getMonth() - 3); 
+                    else if (analyticsFilter === 'year') startDate.setFullYear(now.getFullYear() - 1); 
+                    
+                    return USERS_CONFIG.filter(u => u.role === 'employee').map(u => { 
+                        const empData = employeesData[u.id] || {}; 
+                        const myLeaves = leaves.filter(l => l.employeeId === u.id && l.status === 'Approved'); 
+                        let totalDays = 0; let spells = myLeaves.length; 
+                        myLeaves.forEach(l => { totalDays += calcDur(l.startDate, l.endDate).days; }); 
+                        const bradfordFactor = (spells * spells) * totalDays; 
+                        
+                        const myEvls = dailyEvaluations.filter(e => { 
+                            const eDate = e.date?.toDate ? e.date.toDate() : new Date(e.date); 
+                            return e.employeeId === u.id && eDate >= startDate && eDate <= now; 
+                        }); 
+                        let totalScore = 0; myEvls.forEach(e => totalScore += (e.totalScore || 0)); 
+                        let avgScore = myEvls.length > 0 ? totalScore / myEvls.length : 0; 
+                        let absencePenalty = Math.min(10, Math.floor(totalDays / 5)); 
+                        let bradfordPenalty = 0; 
+                        if (bradfordFactor > 100) bradfordPenalty = 10; else if (bradfordFactor > 50) bradfordPenalty = 5; 
+                        let finalScore = avgScore - absencePenalty - bradfordPenalty; 
+                        finalScore = Math.max(0, finalScore); 
+                        let finalPercentage = finalScore; 
+                        return { ...u, totalDays, bradfordFactor, totalScore: finalScore.toFixed(1), finalPercentage: finalScore.toFixed(0), evalDays: myEvls.length }; 
+                    }).sort((a,b) => b.finalPercentage - a.finalPercentage); 
+                };
+                
                 window.changeAnalyticsFilter = (val) => { analyticsFilter = val; updateContent(); };
-                window.openDailyEvalModal = (empId) => { const user = USERS_CONFIG.find(u => u.id === empId); const todayStr = new Date().toISOString().split('T')[0]; $('modal-content').innerHTML = `<div class="border-b border-gray-200 pb-3 mb-3 flex justify-between items-center"><h3 class="font-bold text-lg text-gray-800">تقييم يومي</h3><span onclick="closeModal()" class="text-gray-400 cursor-pointer hover:text-red-500 text-2xl leading-none">&times;</span></div><p class="text-sm text-gray-500 mb-4 bg-gray-50 p-2 rounded-lg">${user.displayName}</p><div class="mb-4"><label class="text-xs text-gray-500 block mb-1">تاريخ التقييم</label><input type="date" id="eval-date" value="${todayStr}" class="w-full p-2 rounded-lg text-sm"></div><div class="space-y-4"><div class="bg-purple-50 p-3 rounded-xl border border-purple-100"><label class="text-xs text-purple-700 block mb-1 font-bold">الإنتاجية (0-10)</label><input type="number" id="ev-prod" class="w-full border-white bg-white p-2 text-center" min="0" max="10" placeholder="0"></div><div class="bg-green-50 p-3 rounded-xl border border-green-100"><label class="text-xs text-green-700 block mb-1 font-bold">الجودة (0-10)</label><input type="number" id="ev-qual" class="w-full border-white bg-white p-2 text-center" min="0" max="10" placeholder="0"></div><div class="bg-indigo-50 p-3 rounded-xl border border-indigo-100"><label class="text-xs text-indigo-700 block mb-1 font-bold">الكفاءة (0-10)</label><input type="number" id="ev-eff" class="w-full border-white bg-white p-2 text-center" min="0" max="10" placeholder="0"></div><div class="bg-amber-50 p-3 rounded-xl border border-amber-100"><label class="text-xs text-amber-700 block mb-1 font-bold">إنجاز المهام (0-10)</label><input type="number" id="ev-task" class="w-full border-white bg-white p-2 text-center" min="0" max="10" placeholder="0"></div><button onclick="saveDailyEval('${empId}')" class="w-full btn-primary text-white py-2 rounded-xl font-bold shadow-md">حفظ التقييم</button></div>`; openModal(); };
-                window.saveDailyEval = async (empId) => { const dateVal = $('eval-date').value; const prod = parseInt($('ev-prod').value) || 0; const qual = parseInt($('ev-qual').value) || 0; const eff = parseInt($('ev-eff').value) || 0; const task = parseInt($('ev-task').value) || 0; if(!dateVal) return showToast("اختر التاريخ", "error"); const totalScore = prod + qual + eff + task; const user = USERS_CONFIG.find(u => u.id === empId); await addDoc(collection(db, `artifacts/${APP_ID}/public/data/daily_evaluations`), { employeeId: empId, employeeName: user.displayName, date: new Date(dateVal), productivity: prod, quality: qual, efficiency: eff, taskCompletion: task, totalScore, createdAt: new Date() }); showToast("تم حفظ التقييم اليومي"); closeModal(); };
+                
+                // --- Calculate KPI Total (Logic Changed) ---
+                // Input: Raw score (e.g., 6 out of 6).
+                // Total: Sum of raw scores.
+                // Percentage: (Sum / TotalMaxWeight) * 100.
+                window.updateTotalScore = () => {
+                    let grandTotalRaw = 0;
+                    let grandTotalMax = 0;
+
+                    // Helper
+                    const calcSection = (categoryKey, items) => {
+                        let sectionSum = 0;
+                        let sectionMax = 0;
+                        
+                        items.forEach(item => {
+                            const rawVal = parseFloat($(`kpi-${item.id}`).value) || 0; // Direct number input
+                            sectionSum += rawVal;
+                            sectionMax += item.weight;
+                        });
+
+                        // Display Subtotal as the SUM of numbers
+                        $(`subtotal-${categoryKey}`).textContent = `${sectionSum}`;
+                        return { sum: sectionSum, max: sectionMax };
+                    };
+
+                    // Dept
+                    const deptRes = calcSection('dept', KPI_STRUCTURE.dept.items);
+                    grandTotalRaw += deptRes.sum;
+                    grandTotalMax += deptRes.max;
+
+                    // Spec
+                    const specRes = calcSection('spec', KPI_STRUCTURE.spec.items);
+                    grandTotalRaw += specRes.sum;
+                    grandTotalMax += specRes.max;
+
+                    // Behav
+                    const behavRes = calcSection('behav', KPI_STRUCTURE.behav.items);
+                    grandTotalRaw += behavRes.sum;
+                    grandTotalMax += behavRes.max;
+
+                    // Calculate Final Percentage (out of 100)
+                    // If max is 100 (which it is by design), result is direct.
+                    const percentage = grandTotalMax > 0 ? (grandTotalRaw / grandTotalMax) * 100 : 0;
+                    
+                    $('kpi-total-score').textContent = `${percentage.toFixed(1)}%`;
+                };
+
+                // --- Navigation to Eval Page ---
+                window.openDailyEvalPage = (empId) => {
+                    activeEvalEmpId = empId;
+                    navigateTo('daily-eval');
+                };
+
+                // --- Save KPI Eval ---
+                window.saveKpiEval = async () => {
+                    const dateVal = $('eval-date').value; 
+                    const notes = $('ev-notes').value; 
+                    const quarter = $('eval-quarter').value;
+                    
+                    if(!dateVal) return showToast("اختر التاريخ", "error"); 
+
+                    // Collect data
+                    const scores = {};
+                    let totalScore = 0;
+                    let totalMax = 0;
+                    
+                    // Flatten all items
+                    const allItems = [...KPI_STRUCTURE.dept.items, ...KPI_STRUCTURE.spec.items, ...KPI_STRUCTURE.behav.items];
+
+                    allItems.forEach(item => {
+                        const val = parseFloat($(`kpi-${item.id}`).value) || 0;
+                        scores[item.id] = val;
+                        totalScore += val; // Sum of raw scores
+                        totalMax += item.weight;
+                    });
+
+                    // Convert to percentage for storage
+                    const finalPercentage = totalMax > 0 ? (totalScore / totalMax) * 100 : 0;
+
+                    const user = USERS_CONFIG.find(u => u.id === activeEvalEmpId); 
+                    
+                    await addDoc(collection(db, `artifacts/${APP_ID}/public/data/daily_evaluations`), { 
+                        employeeId: activeEvalEmpId, 
+                        employeeName: user.displayName, 
+                        date: new Date(dateVal), 
+                        quarter: quarter,
+                        scores: scores, 
+                        totalScore: finalPercentage.toFixed(1), 
+                        notes: notes,
+                        createdAt: new Date() 
+                    }); 
+                    
+                    showToast("تم حفظ التقييم"); 
+                    goBack(); 
+                };
+
                 window.openDayModal = (dateStr) => { const date = new Date(dateStr); const absent = leaves.filter(l => { if(l.status !== 'Approved') return false; const start = new Date(l.startDate); const end = new Date(l.endDate); return date >= start && date <= end; }); const externalCount = externalWorkers[dateStr] || 0; $('modal-content').innerHTML = `<div class="border-b border-gray-200 pb-3 mb-3 flex justify-between items-center"><h3 class="font-bold text-lg text-gray-800">${formatDate(date)}</h3><span onclick="closeModal()" class="text-gray-400 cursor-pointer hover:text-red-500 text-2xl leading-none">&times;</span></div><div class="mb-6 bg-purple-50 p-4 rounded-xl border border-purple-100"><label class="text-xs text-purple-700 block mb-2 font-bold">عدد العمالة الخارجية</label><div class="flex gap-2"><input type="number" id="ext-workers-input" value="${externalCount}" class="flex-1 border-white bg-white p-3 text-center font-bold text-lg" min="0"><button onclick="saveExternalWorkers('${dateStr}')" class="bg-purple-500 text-white px-4 rounded-xl font-bold text-sm">حفظ</button></div></div><div><h4 class="font-bold text-sm text-gray-700 mb-2">الموظفون الغائبون (${absent.length})</h4>${absent.length === 0 ? '<p class="text-green-500 text-xs bg-green-50 p-2 rounded text-center">الجميع حاضر</p>' : `<div class="space-y-1">${absent.map(l => `<div class="text-xs bg-red-50 text-red-600 p-2 rounded">${l.employeeName} <span class="text-red-300">(${l.type})</span></div>`).join('')}</div>`}</div>`; openModal(); };
                 window.openExternalModal = (dateStr) => { const date = new Date(dateStr); const externalCount = externalWorkers[dateStr] || 0; $('modal-content').innerHTML = `<div class="border-b border-gray-200 pb-3 mb-3 flex justify-between items-center"><h3 class="font-bold text-lg text-gray-800">تعديل القوى العاملة</h3><span onclick="closeModal()" class="text-gray-400 cursor-pointer hover:text-red-500 text-2xl leading-none">&times;</span></div><p class="text-sm text-gray-500 mb-4 bg-gray-50 p-2 rounded-lg">${formatDate(date)}</p><div class="mb-6 bg-purple-50 p-4 rounded-xl border border-purple-100 text-center"><label class="text-xs text-purple-700 block mb-2 font-bold">عدد العمالة الخارجية</label><input type="number" id="ext-input-quick" value="${externalCount}" class="w-full border-white bg-white p-3 text-center font-bold text-2xl" min="0" placeholder="0"></div><button onclick="saveExternalWorkersQuick('${dateStr}')" class="w-full bg-purple-600 text-white py-3 rounded-xl font-bold shadow-md">تأكيد</button>`; openModal(); };
                 window.saveExternalWorkersQuick = async (dateStr) => { const val = parseInt($('ext-input-quick').value) || 0; const ref = doc(db, `artifacts/${APP_ID}/public/data/external_workers`, dateStr); if(val > 0) { await setDoc(ref, { count: val, date: new Date(dateStr) }); } else { await deleteDoc(ref); } showToast("تم الحفظ"); closeModal(); };
                 window.saveExternalWorkers = async (dateStr) => { const val = parseInt($('ext-workers-input').value) || 0; const ref = doc(db, `artifacts/${APP_ID}/public/data/external_workers`, dateStr); if(val > 0) { await setDoc(ref, { count: val, date: new Date(dateStr) }); } else { await deleteDoc(ref); } showToast("تم الحفظ"); closeModal(); };
                 
-                // --- Balance Modal with Warning Logic ---
+                // --- Balance Modal ---
                 window.openEditBalanceModal = (empId) => { 
                     const data = employeesData[empId] || { totalBalance: 0, usedBalance: 0, remainingBalance: 0 }; 
                     const user = USERS_CONFIG.find(u => u.id === empId); 
@@ -576,8 +965,6 @@
         
         window.handleOvertime = async (id, status, empId) => { const ref = doc(db, `artifacts/${APP_ID}/public/data/overtime`, id); await updateDoc(ref, { status }); const msg = status === 'Approved' ? 'تم اعتماد الطلب' : 'تم رفض الطلب'; await createNotification(empId, msg, `الحالة: ${status}`, 'overtime'); showToast(msg); };
         window.addNewTask = async (e) => { e.preventDefault(); const desc = $('mgr-task-desc').value; const assigneeId = $('mgr-task-assignee').value; if(!assigneeId) return showToast("اختر موظف", "error"); const assigneeName = assigneeId === 'all' ? 'الجميع' : USERS_CONFIG.find(u => u.id === assigneeId).displayName; await addDoc(collection(db, `artifacts/${APP_ID}/public/data/tasks`), { description: desc, assigneeId, assigneeName, completed: false, completedBy: [], createdAt: new Date() }); $('mgr-task-desc').value = ''; $('mgr-task-assignee').value = ''; showToast("تمت الإضافة"); };
-        window.triggerDelete = async (colName) => { const messages = { tasks: 'المهام', leaves: 'الإجازات', overtime: 'الوقت الإضافي', balance_logs: 'سجل الأرصدة' }; const msg = messages[colName]; if(!confirm(`تأكيد حذف (${msg})؟`)) return; await deleteCollection(colName, false); showToast(`تم الحذف`); };
-        async function deleteCollection(colName, confirmNeeded = true) { if (confirmNeeded) return; const ref = collection(db, `artifacts/${APP_ID}/public/data/${colName}`); const snap = await getDocs(ref); const batch = writeBatch(db); snap.docs.forEach((d) => { batch.delete(d.ref); }); await batch.commit(); }
         
         // --- Forms ---
         window.openLeaveModal = () => { compressedImageData = null; $('modal-content').innerHTML = `<div class="border-b pb-3 mb-3 flex justify-between items-center"><h3 class="font-bold text-lg">طلب إجازة</h3><span onclick="closeModal()" class="text-gray-400 text-2xl">&times;</span></div><form id="leave-form" class="space-y-3" onsubmit="submitLeave(event)"><div class="grid grid-cols-2 gap-3"><div><label class="text-xs block mb-1">من تاريخ</label><input type="date" id="l-start" class="w-full p-2.5 text-sm" required></div><div><label class="text-xs block mb-1">إلى تاريخ</label><input type="date" id="l-end" class="w-full p-2.5 text-sm" required></div></div><div><label class="text-xs block mb-1">نوع الإجازة</label><select id="l-type" class="w-full p-2.5 text-sm bg-white" required><option value="اعتيادية">اعتيادية</option><option value="مرضية">مرضية</option><option value="طارئة">طارئة</option></select></div><div><label class="text-xs block mb-1">ملاحظات</label><textarea id="l-notes" rows="2" class="w-full p-2.5 text-sm resize-none" placeholder="اختياري"></textarea></div><div><input type="file" id="l-image" accept="image/*" class="hidden" onchange="handleImageSelect(event)"><button type="button" onclick="document.getElementById('l-image').click()" class="w-full border-2 border-dashed border-gray-200 rounded-xl p-3 text-gray-500 hover:border-teal-400">اختيار صورة</div><button type="submit" class="w-full bg-orange-500 text-white py-2.5 rounded-xl font-bold">إرسال</button></form>`; openModal(); };
@@ -596,8 +983,8 @@
             await signOut(auth); 
             localStorage.removeItem('egybev_user'); 
             localStorage.removeItem('lastPage'); 
-            // Reset UI
             currentUser = null; 
+            previousPage = ''; 
             hide('main-header'); 
             hide('dashboard-container'); 
             hide('fab-btn'); 
@@ -622,26 +1009,20 @@
         
         // --- Init App ---
         async function initApp() { 
-            // 1. Check Local Storage First for UI state
             const storedUser = localStorage.getItem('egybev_user'); 
             
             if (storedUser) {
                 currentUser = JSON.parse(storedUser);
                 
-                // 2. Initialize Firebase Auth
                 onAuthStateChanged(auth, async (user) => { 
                     if (user) { 
                         fbUser = user; 
                         await syncUsers(); 
                         setupListeners(); 
-                        
-                        // 3. Show Dashboard
                         hide('login-section'); 
                         show('dashboard-container'); 
                         show('main-header'); 
                         document.body.classList.remove('login-bg');
-                        
-                        // 4. Restore Last Page or Default
                         const lastPage = localStorage.getItem('lastPage'); 
                         if (lastPage) {
                             navigateTo(lastPage); 
@@ -656,7 +1037,6 @@
                     } 
                 }); 
             } else {
-                // No user found, ensure login screen is visible
                 show('login-section');
                 hide('dashboard-container');
                 hide('main-header');
@@ -679,4 +1059,4 @@
         if ('serviceWorker' in navigator) { window.addEventListener('load', () => { navigator.serviceWorker.register('./sw.js').catch(err => console.log('SW failed', err)); }); }
     </script>
 </body>
-</html>
+</html> 
