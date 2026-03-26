@@ -305,14 +305,11 @@
         // --- Constants ---
         const MAX_LEAVE_BALANCE = 60;
 
-        // --- KPI Configuration (UPDATED) ---
-        // Items represent the direct value to be entered (e.g., 6 points).
-        // maxWeight represents the Total Sum of items (40).
+        // --- KPI Configuration ---
         const KPI_STRUCTURE = {
             dept: {
                 maxWeight: 40, 
                 items: [
-                    // Sum = 6+5+6+6+6+5+6 = 40
                     { id: 'd1', name: 'مشاهدات السلامة (safety)', weight: 6 },
                     { id: 'd2', name: 'عدد ايام العمل بدون حوادث', weight: 5 },
                     { id: 'd3', name: 'الإلتزام بممارسات التصنيع الجيد', weight: 6 },
@@ -325,7 +322,6 @@
             spec: {
                 maxWeight: 40, 
                 items: [
-                    // Sum = 40
                     { id: 's1', name: 'جودة التقارير', weight: 6 },
                     { id: 's2', name: 'متابعة الأعطال', weight: 6 },
                     { id: 's3', name: 'جودة الكحول المنتج', weight: 6 },
@@ -338,7 +334,6 @@
             behav: {
                 maxWeight: 20,
                 items: [
-                    // Sum = 20
                     { id: 'b1', name: 'العمل مع الاخرين', weight: 4 },
                     { id: 'b2', name: 'التكيف والاستجابة للتغيير', weight: 4 },
                     { id: 'b3', name: 'التعاون مع الاقسام الاخرى', weight: 4 },
@@ -354,6 +349,7 @@
         const hide = id => { if($(id)) $(id).classList.add('hidden') };
         const showToast = (msg, type = 'success') => { const c = $('toast-container'); const t = document.createElement('div'); t.className = `pointer-events-auto px-4 py-2 rounded-xl shadow-lg text-white text-sm font-medium mb-2 ${type === 'success' ? 'bg-teal-600' : (type === 'error' ? 'bg-red-500' : 'bg-amber-500')}`; t.textContent = msg; c.appendChild(t); setTimeout(() => t.remove(), 4000); };
         const formatDate = (d) => { if (!d) return '-'; const date = d.toDate ? d.toDate() : new Date(d); const day = String(date.getDate()).padStart(2, '0'); const month = String(date.getMonth() + 1).padStart(2, '0'); const year = date.getFullYear(); return `${day}/${month}/${year}`; };
+        const getMonthName = (dateObj) => { const months = ["يناير", "فبراير", "مارس", "ابريل", "مايو", "يونيو", "يوليو", "اغسطس", "سبتمبر", "اكتوبر", "نوفمبر", "ديسمبر"]; return months[dateObj.getMonth()]; };
         const calcDur = (s, e) => { const d1 = new Date(s), d2 = new Date(e); if (d2 < d1) return { days: 0, hours: 0, totalHours: 0 }; const days = Math.ceil(Math.abs(d2 - d1) / (1000 * 60 * 60 * 24)) + 1; return { days, hours: 0, totalHours: days * 8 }; };
         
         // --- Utils ---
@@ -418,9 +414,54 @@
         async function logTx(empId, empName, type, val, notes) { await addDoc(collection(db, `artifacts/${APP_ID}/public/data/balance_logs`), { employeeId: empId, employeeName: empName, type, value: val, notes, date: new Date() }); }
         
         // --- Export Functions ---
-        window.exportToExcel = () => { if(leaves.length === 0) return showToast("لا توجد بيانات", "error"); const data = leaves.map(l => { const start = l.startDate?.toDate ? l.startDate.toDate() : new Date(l.startDate); const end = l.endDate?.toDate ? l.endDate.toDate() : new Date(l.endDate); const dur = calcDur(l.startDate, l.endDate); const returnDate = new Date(end); returnDate.setDate(returnDate.getDate() + 1); return { 'الموظف': l.employeeName, 'نوع الإجازة': l.type, 'من تاريخ': start.toLocaleDateString('ar-EG'), 'إلى تاريخ': end.toLocaleDateString('ar-EG'), 'عدد الأيام': dur.days, 'تاريخ العودة': returnDate.toLocaleDateString('ar-EG'), 'الحالة': l.status === 'Approved' ? 'مقبول' : (l.status === 'Pending' ? 'معلق' : 'مرفوض') }; }); const worksheet = XLSX.utils.json_to_sheet(data); const workbook = XLSX.utils.book_new(); XLSX.utils.book_append_sheet(workbook, worksheet, "سجل الاجازات"); XLSX.writeFile(workbook, `EgyBev_Leaves.xlsx`); showToast("تم التحميل"); };
-        window.exportLogsToExcel = () => { if(balanceLogs.length === 0) return showToast("لا توجد حركات", "error"); const data = balanceLogs.map(log => ({ 'الموظف': log.employeeName, 'النوع': log.type === 'adjustment' ? 'إضافة' : 'خصم', 'الأيام': log.value.days, 'ملاحظات': log.notes, 'التاريخ': (log.date?.toDate() || new Date()).toLocaleDateString('ar-EG') })); const ws = XLSX.utils.json_to_sheet(data); const wb = XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb, ws, "سجل الأرصدة"); XLSX.writeFile(wb, `EgyBev_Balance_Logs.xlsx`); showToast("تم التصدير"); };
-        window.exportPerformance = () => { const stats = calculatePerformanceStats(); const data = stats.map(d => ({ 'الموظف': d.displayName, 'النتيجة النهائية (%)': d.finalPercentage, 'مجموع النقاط': d.totalScore, 'عدد أيام التقييم': d.evalDays, 'إجمالي الغياب': d.totalDays, 'معامل برادفورد': d.bradfordFactor })); const ws = XLSX.utils.json_to_sheet(data); const wb = XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb, ws, "تقرير الأداء"); XLSX.writeFile(wb, `EgyBev_Performance_Report.xlsx`); showToast("تم تحميل التقرير"); };
+        window.exportToExcel = () => { if(leaves.length===0) return showToast("لا توجد بيانات", "error"); const data = leaves.map(l => { const start = l.startDate?.toDate ? l.startDate.toDate() : new Date(l.startDate); const end = l.endDate?.toDate ? l.endDate.toDate() : new Date(l.endDate); const dur = calcDur(l.startDate, l.endDate); const returnDate = new Date(end); returnDate.setDate(returnDate.getDate() + 1); return { 'الموظف': l.employeeName, 'نوع الإجازة': l.type, 'من تاريخ': start.toLocaleDateString('ar-EG'), 'إلى تاريخ': end.toLocaleDateString('ar-EG'), 'عدد الأيام': dur.days, 'تاريخ العودة': returnDate.toLocaleDateString('ar-EG'), 'الحالة': l.status === 'Approved' ? 'مقبول' : (l.status === 'Pending' ? 'معلق' : 'مرفوض') }; }); const worksheet = XLSX.utils.json_to_sheet(data); const workbook = XLSX.utils.book_new(); XLSX.utils.book_append_sheet(workbook, worksheet, "سجل الاجازات"); XLSX.writeFile(workbook, `EgyBev_Leaves.xlsx`); showToast("تم التحميل"); };
+        window.exportLogsToExcel = () => { if(balanceLogs.length===0) return showToast("لا توجد حركات", "error"); const data = balanceLogs.map(log => ({ 'الموظف': log.employeeName, 'النوع': log.type === 'adjustment' ? 'إضافة' : 'خصم', 'الأيام': log.value.days, 'ملاحظات': log.notes, 'التاريخ': (log.date?.toDate() || new Date()).toLocaleDateString('ar-EG') })); const ws = XLSX.utils.json_to_sheet(data); const wb = XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb, ws, "سجل الأرصدة"); XLSX.writeFile(wb, `EgyBev_Balance_Logs.xlsx`); showToast("تم التصدير"); };
+        
+        // --- Export Performance (Detailed) ---
+        window.exportPerformance = () => {
+            if(dailyEvaluations.length === 0) return showToast("لا توجد تقييمات لتصديرها", "error");
+            
+            const wb = XLSX.utils.book_new();
+            const allItems = [...KPI_STRUCTURE.dept.items, ...KPI_STRUCTURE.spec.items, ...KPI_STRUCTURE.behav.items];
+            
+            USERS_CONFIG.filter(u => u.role === 'employee').forEach(user => {
+                const empEvals = dailyEvaluations.filter(e => e.employeeId === user.id)
+                    .sort((a,b) => new Date(a.date) - new Date(b.date));
+                
+                if(empEvals.length === 0) return;
+
+                const sheetData = [];
+                const header = ['التاريخ', 'الربع السنوي', 'النتيجة النهائية', 'ملاحظات'];
+                allItems.forEach(item => header.push(item.name));
+                sheetData.push(header);
+                
+                empEvals.forEach(ev => {
+                    const row = [
+                        formatDate(ev.date),
+                        ev.quarter || '-',
+                        ev.totalScore ? `${ev.totalScore}%` : '0%',
+                        ev.notes || ''
+                    ];
+                    allItems.forEach(item => {
+                        row.push(ev.scores?.[item.id] || 0);
+                    });
+                    sheetData.push(row);
+                });
+                
+                const ws = XLSX.utils.aoa_to_sheet(sheetData);
+                const colWidths = [{wch: 12}, {wch: 12}, {wch: 15}, {wch: 30}];
+                allItems.forEach(() => colWidths.push({wch: 20}));
+                ws['!cols'] = colWidths;
+
+                let sheetName = user.displayName.replace(/[\\\/\?\*\[\]:]/g, '');
+                sheetName = sheetName.substring(0, 31);
+                
+                XLSX.utils.book_append_sheet(wb, ws, sheetName);
+            });
+            
+            XLSX.writeFile(wb, `EgyBev_Performance_Details.xlsx`);
+            showToast("تم تصدير التقرير التفصيلي");
+        };
 
         // --- Status Helper ---
         function getEmployeeStatus(empId) { const today = new Date(); today.setHours(0,0,0,0); const currentLeave = leaves.find(l => { if(l.employeeId !== empId || l.status !== 'Approved') return false; const start = new Date(l.startDate); const end = new Date(l.endDate); start.setHours(0,0,0,0); end.setHours(0,0,0,0); return today >= start && today <= end; }); if (currentLeave) { const end = new Date(currentLeave.endDate); end.setHours(0,0,0,0); const diffTime = Math.abs(end - today); const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); return { status: 'leave', text: `في إجازة`, subText: `عائد بعد ${diffDays} يوم`, color: 'gray' }; } const tomorrow = new Date(today); tomorrow.setDate(tomorrow.getDate() + 1); const upcomingLeave = leaves.find(l => { if(l.employeeId !== empId || l.status !== 'Approved') return false; const start = new Date(l.startDate); start.setHours(0,0,0,0); return start.getTime() === tomorrow.getTime(); }); if (upcomingLeave) return { status: 'warning', text: 'إجازة غداً', subText: upcomingLeave.type, color: 'yellow' }; return { status: 'available', text: 'موجود', subText: 'متاح للعمل', color: 'green' }; }
@@ -567,7 +608,7 @@
                 
                 if (currentPage === 'mgr-logs') { let filteredLogs = balanceLogs; if (currentHistoryFilter !== 'all') { filteredLogs = balanceLogs.filter(l => l.employeeId === currentHistoryFilter); } filteredLogs.sort((a,b) => b.date?.seconds - a.date?.seconds); $('page-mgr-logs').innerHTML = `<div class="card overflow-hidden"><div class="p-4 border-b bg-gray-50 flex justify-between items-center"><h3 class="font-bold text-gray-800">سجل الحركات</h3><div class="flex gap-2"><button onclick="exportLogsToExcel()" class="flex items-center gap-1 bg-blue-600 text-white px-3 py-1.5 rounded-lg text-xs font-bold shadow-sm hover:bg-blue-700 transition">تصدير الأرصدة</button><button onclick="exportToExcel()" class="flex items-center gap-1 bg-green-600 text-white px-3 py-1.5 rounded-lg text-xs font-bold shadow-sm hover:bg-green-700 transition">تصدير الإجازات</button></div></div><div class="p-3 bg-gray-100 border-b"><select id="log-filter-select" class="w-full border rounded-lg p-2 bg-white text-sm outline-none" onchange="applyHistoryFilter(this.value)"><option value="all" ${currentHistoryFilter === 'all' ? 'selected' : ''}>عرض الكل</option>${USERS_CONFIG.filter(u=>u.role==='employee').map(u => `<option value="${u.id}" ${currentHistoryFilter === u.id ? 'selected' : ''}>${u.displayName}</option>`).join('')}</select></div><div class="divide-y text-xs max-h-[50vh] overflow-y-auto">${filteredLogs.length === 0 ? '<div class="p-6 text-center text-gray-400">لا توجد حركات</div>' : filteredLogs.map(log => `<div class="flex justify-between items-start p-2 hover:bg-gray-50 transition group"><div class="flex-1"><div class="flex items-center gap-2 mb-0.5"><span class="font-bold ${log.type === 'adjustment' ? 'text-green-600' : 'text-red-500'}">${log.type === 'adjustment' ? '+' : '-'} ${log.value.days}ي</span></div><p class="text-gray-600 text-[11px]"><span class="font-medium">${log.employeeName}</span> - <span class="text-gray-400">${log.notes}</span></p></div><div class="flex items-center gap-2"><span class="text-[10px] text-gray-300 font-medium">${formatDate(log.date)}</span><button onclick="deleteSingleLog('${log.id}')" class="opacity-0 group-hover:opacity-100 text-red-400 hover:text-red-600 p-1 rounded transition"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg></button></div></div>`).join('')}</div></div>`; }
 
-                // --- ANALYTICS PAGE ---
+                // --- ANALYTICS PAGE (Modified) ---
                 if (currentPage === 'mgr-analytics') { 
                     const stats = calculatePerformanceStats(); 
                     $('page-mgr-analytics').innerHTML = `
@@ -614,17 +655,19 @@
                         <div class="card p-4">
                             <h3 class="font-bold text-md text-gray-700 mb-3">سجل التقييمات الأخيرة</h3>
                             <div class="space-y-2 max-h-40 overflow-y-auto">
-                                ${dailyEvaluations.length === 0 ? '<p class="text-center text-gray-400 text-xs py-4">لا توجد تقييمات مسجلة بعد.</p>' : dailyEvaluations.slice(0, 10).map(ev => `
+                                ${dailyEvaluations.length === 0 ? '<p class="text-center text-gray-400 text-xs py-4">لا توجد تقييمات مسجلة بعد.</p>' : dailyEvaluations.slice(0, 10).map(ev => {
+                                    const evDate = ev.date?.toDate ? ev.date.toDate() : new Date(ev.date);
+                                    return `
                                     <div class="flex justify-between items-center p-2 bg-gray-50 rounded-lg">
                                         <div class="flex items-center gap-2">
-                                            <span class="text-[10px] bg-gray-200 px-2 py-0.5 rounded">${formatDate(ev.date)}</span>
+                                            <span class="text-[10px] bg-teal-100 text-teal-700 px-2 py-0.5 rounded">${getMonthName(evDate)} ${evDate.getFullYear()}</span>
                                             <span class="font-bold text-xs">${ev.employeeName}</span>
                                         </div>
                                         <div class="flex gap-1 text-[10px] font-bold">
                                             <span class="text-gray-400 mr-1">= ${ev.totalScore}%</span>
                                         </div>
                                     </div>
-                                `).join('')}
+                                `; }).join('')}
                             </div>
                         </div>
                     `; 
@@ -636,8 +679,6 @@
                     const user = USERS_CONFIG.find(u => u.id === activeEvalEmpId);
                     const todayStr = new Date().toISOString().split('T')[0];
 
-                    // Generate Grid HTML with Subtotals
-                    // Added: max="${item.weight}" to restrict input
                     const generateKpiSection = (categoryKey, sectionData) => {
                         const rows = sectionData.items.map(item => `
                             <div class="kpi-row kpi-grid">
@@ -680,7 +721,8 @@
                     $('page-daily-eval').innerHTML = `
                         <div class="bg-white border-b sticky top-0 z-10 p-4 shadow-sm">
                             <div class="flex items-center gap-3">
-                                <button onclick="goBack()" class="p-2 hover:bg-gray-100 rounded-full">
+                                <!-- Fixed Back Button to Analytics -->
+                                <button onclick="window.returnToAnalytics()" class="p-2 hover:bg-gray-100 rounded-full">
                                     <svg class="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
                                     </svg>
@@ -707,13 +749,13 @@
                             </div>
 
                             <!-- Department KPI -->
-                            ${generateKpiSection('dept', {title: '1. Departmental KPIs', maxWeight: KPI_STRUCTURE.dept.maxWeight, items: KPI_STRUCTURE.dept.items})}
+                            ${generateKpiSection('dept', {title: '1. KPI قسم', maxWeight: KPI_STRUCTURE.dept.maxWeight, items: KPI_STRUCTURE.dept.items})}
 
                             <!-- Specific KPI -->
-                            ${generateKpiSection('spec', {title: '2.Specific KPIs', maxWeight: KPI_STRUCTURE.spec.maxWeight, items: KPI_STRUCTURE.spec.items})}
+                            ${generateKpiSection('spec', {title: '2. KPI مخصص', maxWeight: KPI_STRUCTURE.spec.maxWeight, items: KPI_STRUCTURE.spec.items})}
 
                             <!-- Behavioral KPI -->
-                            ${generateKpiSection('behav', {title: '3.Behavioral KPIs', maxWeight: KPI_STRUCTURE.behav.maxWeight, items: KPI_STRUCTURE.behav.items})}
+                            ${generateKpiSection('behav', {title: '3. KPI سلوكي', maxWeight: KPI_STRUCTURE.behav.maxWeight, items: KPI_STRUCTURE.behav.items})}
 
                             <!-- Total Score Display -->
                             <div class="bg-teal-50 border border-teal-100 rounded-2xl p-5 text-center">
@@ -768,54 +810,52 @@
                 
                 window.changeAnalyticsFilter = (val) => { analyticsFilter = val; updateContent(); };
                 
-                // --- Calculate KPI Total (Logic Changed) ---
-                // Input: Raw score (e.g., 6 out of 6).
-                // Total: Sum of raw scores.
-                // Percentage: (Sum / TotalMaxWeight) * 100.
+                // --- Calculate KPI Total ---
                 window.updateTotalScore = () => {
                     let grandTotalRaw = 0;
                     let grandTotalMax = 0;
 
-                    // Helper
                     const calcSection = (categoryKey, items) => {
                         let sectionSum = 0;
                         let sectionMax = 0;
                         
                         items.forEach(item => {
-                            const rawVal = parseFloat($(`kpi-${item.id}`).value) || 0; // Direct number input
+                            const rawVal = parseFloat($(`kpi-${item.id}`).value) || 0;
                             sectionSum += rawVal;
                             sectionMax += item.weight;
                         });
 
-                        // Display Subtotal as the SUM of numbers
                         $(`subtotal-${categoryKey}`).textContent = `${sectionSum}`;
                         return { sum: sectionSum, max: sectionMax };
                     };
 
-                    // Dept
                     const deptRes = calcSection('dept', KPI_STRUCTURE.dept.items);
                     grandTotalRaw += deptRes.sum;
                     grandTotalMax += deptRes.max;
 
-                    // Spec
                     const specRes = calcSection('spec', KPI_STRUCTURE.spec.items);
                     grandTotalRaw += specRes.sum;
                     grandTotalMax += specRes.max;
 
-                    // Behav
                     const behavRes = calcSection('behav', KPI_STRUCTURE.behav.items);
                     grandTotalRaw += behavRes.sum;
                     grandTotalMax += behavRes.max;
 
-                    // Calculate Final Percentage (out of 100)
-                    // If max is 100 (which it is by design), result is direct.
                     const percentage = grandTotalMax > 0 ? (grandTotalRaw / grandTotalMax) * 100 : 0;
                     
                     $('kpi-total-score').textContent = `${percentage.toFixed(1)}%`;
                 };
 
-                // --- Navigation to Eval Page ---
+                // --- Fixed Return Function ---
+                window.returnToAnalytics = () => {
+                    // Reset active employee
+                    activeEvalEmpId = null;
+                    // Force navigation
+                    navigateTo('mgr-analytics');
+                };
+
                 window.openDailyEvalPage = (empId) => {
+                    previousPage = 'mgr-analytics';
                     activeEvalEmpId = empId;
                     navigateTo('daily-eval');
                 };
@@ -828,22 +868,19 @@
                     
                     if(!dateVal) return showToast("اختر التاريخ", "error"); 
 
-                    // Collect data
                     const scores = {};
                     let totalScore = 0;
                     let totalMax = 0;
                     
-                    // Flatten all items
                     const allItems = [...KPI_STRUCTURE.dept.items, ...KPI_STRUCTURE.spec.items, ...KPI_STRUCTURE.behav.items];
 
                     allItems.forEach(item => {
                         const val = parseFloat($(`kpi-${item.id}`).value) || 0;
                         scores[item.id] = val;
-                        totalScore += val; // Sum of raw scores
+                        totalScore += val;
                         totalMax += item.weight;
                     });
 
-                    // Convert to percentage for storage
                     const finalPercentage = totalMax > 0 ? (totalScore / totalMax) * 100 : 0;
 
                     const user = USERS_CONFIG.find(u => u.id === activeEvalEmpId); 
@@ -860,7 +897,7 @@
                     }); 
                     
                     showToast("تم حفظ التقييم"); 
-                    goBack(); 
+                    window.returnToAnalytics(); // Use the fixed return function
                 };
 
                 window.openDayModal = (dateStr) => { const date = new Date(dateStr); const absent = leaves.filter(l => { if(l.status !== 'Approved') return false; const start = new Date(l.startDate); const end = new Date(l.endDate); return date >= start && date <= end; }); const externalCount = externalWorkers[dateStr] || 0; $('modal-content').innerHTML = `<div class="border-b border-gray-200 pb-3 mb-3 flex justify-between items-center"><h3 class="font-bold text-lg text-gray-800">${formatDate(date)}</h3><span onclick="closeModal()" class="text-gray-400 cursor-pointer hover:text-red-500 text-2xl leading-none">&times;</span></div><div class="mb-6 bg-purple-50 p-4 rounded-xl border border-purple-100"><label class="text-xs text-purple-700 block mb-2 font-bold">عدد العمالة الخارجية</label><div class="flex gap-2"><input type="number" id="ext-workers-input" value="${externalCount}" class="flex-1 border-white bg-white p-3 text-center font-bold text-lg" min="0"><button onclick="saveExternalWorkers('${dateStr}')" class="bg-purple-500 text-white px-4 rounded-xl font-bold text-sm">حفظ</button></div></div><div><h4 class="font-bold text-sm text-gray-700 mb-2">الموظفون الغائبون (${absent.length})</h4>${absent.length === 0 ? '<p class="text-green-500 text-xs bg-green-50 p-2 rounded text-center">الجميع حاضر</p>' : `<div class="space-y-1">${absent.map(l => `<div class="text-xs bg-red-50 text-red-600 p-2 rounded">${l.employeeName} <span class="text-red-300">(${l.type})</span></div>`).join('')}</div>`}</div>`; openModal(); };
@@ -1059,4 +1096,4 @@
         if ('serviceWorker' in navigator) { window.addEventListener('load', () => { navigator.serviceWorker.register('./sw.js').catch(err => console.log('SW failed', err)); }); }
     </script>
 </body>
-</html> 
+</html>
